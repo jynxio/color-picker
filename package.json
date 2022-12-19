@@ -1,0 +1,14 @@
+{
+    "name": "practice-vanilla",
+    "version": "0.0.0",
+    "license": "MIT",
+    "author": "jynxio",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "start": "vite"
+    },
+    "devDependencies": {
+        "vite": "^4.0.0"
+    }
+}
