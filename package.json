@@ -1,14 +1,20 @@
 {
-    "name": "practice-vanilla",
-    "version": "0.0.0",
+    "name": "template-solid",
+    "description": "template for solid project",
+    "version": "0.1.0",
     "license": "MIT",
     "author": "jynxio",
     "type": "module",
     "private": true,
     "scripts": {
-        "start": "vite"
+        "start": "vite",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "solid-js": "^1.6.6"
     },
     "devDependencies": {
-        "vite": "^4.0.0"
+        "vite-plugin-solid": "^2.5.0",
+        "vite": "^4.0.3"
     }
 }

@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 
+import solid from "vite-plugin-solid";
+
 export default defineConfig( ( {
     command,
     mode,
@@ -21,10 +23,11 @@ export default defineConfig( ( {
     function createDevelopmentEnvironment () {
 
         return {
+            plugins: [ solid() ],
             base: "/",
             publicDir: "public",
             server: {
-                host: "localhost",
+                host: true,
                 port: 8080,
                 open: true,
                 https: false,     // 使用@vitejs/plugin-basic-ssl来创建一个自签名的证书，详见https://cn.vitejs.dev/config/server-options.html#server-https
@@ -38,13 +41,13 @@ export default defineConfig( ( {
     function createProductionEnvironment () {
 
         return {
+            plugins: [ solid() ],
             base: "/",
             publicDir: "public",
             build: {
                 outDir: "build",
                 assetsInlineLimit: 4096,     // 体积小于该值的资源将被转译为base64数据
                 chunkSizeWarningLimit: 1000, // chunk体积报警的触发阈值
-                // lib: undefined,           // 构建为库，详见https://cn.vitejs.dev/config/build-options.html#build-lib
             },
         };
 
