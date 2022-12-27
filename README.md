@@ -1,1 +1,1 @@
-# css-picker
+# color-picker
