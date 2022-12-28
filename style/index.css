@@ -1,0 +1,34 @@
+html, body {
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+#solid-app {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    inline-size: 100%;
+    block-size: 100%;
+
+    padding-inline: calc( 50% - 15em );
+}
+
+/* TODO：重制为 *.module.css */
+/* TODO：重制为 *.module.css */
+/* TODO：重制为 *.module.css */
+.box {
+    inline-size: 100%;
+    block-size: 25em;
+
+    background-color: teal;
+}
+
+.text {
+    inline-size: 100%;
+    block-size: 1.5em;
+
+    background-color: orangered;
+}

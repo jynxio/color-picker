@@ -1,16 +1,14 @@
-import logo from "/static/logo.svg";
+import Box from "./Box";
 
-import styles from "/style/App.module.css";
+import Text from "./Text";
 
-function App () {
+export default function App () {
 
     return (
-        <div class={ styles.App }>
-            <header class={ styles.header }>
-                <img src={ logo } class={ styles.logo } alt="logo" />
-            </header>
-        </div>
+        <>
+            <Box />
+            <Text />
+        </>
     );
-}
 
-export default App;
+}
