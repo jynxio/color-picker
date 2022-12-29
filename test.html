@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #000000;
+        }
+
+        .box {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            inline-size: 8px;
+            block-size: 8px;
+
+            background-color: red;
+        }
+
+        .cell {
+            inline-size: 4px;
+            block-size: 4px;
+
+            background-color: #ffffff;
+        }
+
+        .cell:nth-child( 1 ),
+        .cell:nth-child( 4 ) {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+</body>
+</html>

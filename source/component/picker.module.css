@@ -1,0 +1,52 @@
+/* -------------------------------------------------------------------------------------------- */
+.picker {
+    display: flex;
+
+    flex-direction: column;
+
+    inline-size: 100%;
+    block-size: 20em;
+
+    background-color: pink;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.r, .g, .b, .a {
+    display: flex;
+
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: end;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.r > .map,
+.g > .map,
+.b > .map,
+.a > .map {
+    inline-size: 100%;
+    block-size: 2em;
+
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+}
+
+.r > .map {
+    background-image: linear-gradient( to right, rgb( 0 0 0 ), rgb( 255 0 0 ) );
+}
+
+.g > .map {
+    background-image: linear-gradient( to right, rgb( 0 0 0 ), rgb( 0 255 0 ) );
+}
+
+.b > .map {
+    background-image: linear-gradient( to right, rgb( 0 0 0 ), rgb( 0 0 255 ) );
+}
+
+.a > .map {
+    filter: contrast( 10% );
+    background-repeat: repeat;
+    background-image:
+        linear-gradient( to right, rgb( 255 255 255 / 0 ), rgb( 255 255 255 / 1 ) ),
+        url( "/static/checkerboard-3-3.png" );
+}

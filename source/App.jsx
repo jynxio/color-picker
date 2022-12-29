@@ -1,14 +1,13 @@
-import Box from "./Box";
+import style from "./app.module.css";
 
-import Text from "./Text";
+import Picker from "./component/Picker";
 
 export default function App () {
 
     return (
-        <>
-            <Box />
-            <Text />
-        </>
+        <div class={ style.container }>
+            <Picker />
+        </div>
     );
 
 }
