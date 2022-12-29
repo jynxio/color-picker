@@ -32,21 +32,22 @@
 }
 
 .r > .map {
-    background-image: linear-gradient( to right, rgb( 0 0 0 ), rgb( 255 0 0 ) );
+    background-image: linear-gradient( to right, #000, #f00 );
 }
 
 .g > .map {
-    background-image: linear-gradient( to right, rgb( 0 0 0 ), rgb( 0 255 0 ) );
+    background-image: linear-gradient( to right, #000, #0f0 );
 }
 
 .b > .map {
-    background-image: linear-gradient( to right, rgb( 0 0 0 ), rgb( 0 0 255 ) );
+    background-image: linear-gradient( to right, #000, #00f );
 }
 
 .a > .map {
-    filter: contrast( 10% );
-    background-repeat: repeat;
+    background-color: #ffffff;
     background-image:
-        linear-gradient( to right, rgb( 255 255 255 / 0 ), rgb( 255 255 255 / 1 ) ),
-        url( "/static/checkerboard-3-3.png" );
+        linear-gradient( 45deg, #ccc 25%, transparent 0%, transparent 75%, #ccc 0% ),
+        linear-gradient( 45deg, #ccc 25%, transparent 0%, transparent 75%, #ccc 0% );
+    background-position: 0 0, 6px 6px;
+    background-size: 12px 12px;
 }

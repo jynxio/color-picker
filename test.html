@@ -6,40 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body, html {
+            inline-size: 100%;
+            block-size: 100%;
+        }
+
         body {
-            background-color: #000000;
-        }
-
-        .box {
-            display: flex;
-
-            flex-wrap: wrap;
-
-            inline-size: 8px;
-            block-size: 8px;
-
-            background-color: red;
-        }
-
-        .cell {
-            inline-size: 4px;
-            block-size: 4px;
-
-            background-color: #ffffff;
-        }
-
-        .cell:nth-child( 1 ),
-        .cell:nth-child( 4 ) {
-            background-color: #cccccc;
+            background-image:
+                linear-gradient( 45deg, #cccccc 25%, transparent 0%, transparent 75%, #cccccc 0% ),
+                linear-gradient( 45deg, #cccccc 25%, transparent 0%, transparent 75%, #cccccc 0% );
+                /* linear-gradient( 45deg, #000 0%, #000 25%, #fff 25%, #fff 75%, #000 75%, #000 100% ); */
+                /* linear-gradient( 135deg, #000 0%, #000 25%, #fff 25%, #fff 75%, #000 75%, #000 100% ); */
+            background-position: 0 0, 100px 100px;
+            background-size: 200px 200px;
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-    </div>
+    
 </body>
 </html>
