@@ -10,12 +10,13 @@
     flex-direction: column;
 
     inline-size: 100%;
+    padding: 1em;
 
     background-color: pink;
 }
 
 /* -------------------------------------------------------------------------------------------- */
-.r, .g, .b, .a {
+.red, .green, .blue, .alpha {
     display: grid;
 
     grid-template-rows: auto 2em;
@@ -25,18 +26,18 @@
 }
 
 /* -------------------------------------------------------------------------------------------- */
-.name {
+.color-name {
     justify-self: start;
     align-self: end;
 }
 
-.value {
+.color-value {
     justify-self: end;
     align-self: end;
 }
 
 /* -------------------------------------------------------------------------------------------- */
-.map {
+.color-map {
     position: relative;
 
     grid-column: 1 / 3;
@@ -50,19 +51,19 @@
     border-radius: var( --border-radius );
 }
 
-.r > .map {
+.red > .color-map {
     background-image: linear-gradient( to right, #000, #f00 );
 }
 
-.g > .map {
+.green > .color-map {
     background-image: linear-gradient( to right, #000, #0f0 );
 }
 
-.b > .map {
+.blue > .color-map {
     background-image: linear-gradient( to right, #000, #00f );
 }
 
-.a > .map {
+.alpha > .color-map {
     background-color: #ffffff;
     background-image:
         linear-gradient( 45deg, #ccc 25%, transparent 0%, transparent 75%, #ccc 0% ),
@@ -71,30 +72,60 @@
     background-size: 12px 12px;
 }
 
-.a > .map > .overlay {
+/* -------------------------------------------------------------------------------------------- */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
     inline-size: 100%;
     block-size: 100%;
+}
 
-    border-radius: var( --border-radius );
+.red > .color-map > .overlay,
+.green > .color-map > .overlay,
+.blue > .color-map > .overlay {
+    background-image: none;
+}
 
+.alpha > .color-map > .overlay {
     background-image: linear-gradient( 90deg, #fff0, #ffff );
 }
 
 /* -------------------------------------------------------------------------------------------- */
 .anchor {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    inline-size: calc( 100% - var( --border-width ) * 2 - 2px * 2 );
+    block-size: 100%;
+    margin-inline: auto;
+
+    transform: translateX( -50% );
+}
+
+.anchor > span {
     box-sizing: content-box;
 
     position: absolute;
-    top: 0%;
-    left: 50%;
+    top: calc( -1 *  var( --border-width ) );
+    left: 100%;
 
-    inline-size: 1px;
+    inline-size: 5px;
     block-size: 100%;
-    padding-inline: 6px;
+    border: var( --border-width ) solid #fff;
+    outline: var( --border-width ) solid #000;
 
-    border-block: var( --border-width ) solid #000;
-    border-inline: 5px solid transparent;
-
-    background-color: #000;
+    background-color: transparent;
     background-clip: content-box;
+
+    transform: translateX( -50% );
+
+    cursor: pointer;
+}
+
+.alpha > .color-map > .anchor > span {
+    background-color: #ccc;
 }
