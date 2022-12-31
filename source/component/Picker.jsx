@@ -11,16 +11,33 @@ function RgbPicker () {
     return (
         <div class={ style.picker }>
             <div class={ style.r }>
-                <div class={ style.map }></div>
+                <span class={ style.name }>Red</span>
+                <span class={ style.value }>100</span>
+                <div class={ style.map }>
+                    <div class={ style.anchor }></div>
+                </div>
             </div>
             <div class={ style.g }>
-                <div class={ style.map }></div>
+                <span class={ style.name }>Green</span>
+                <span class={ style.value }>100</span>
+                <div class={ style.map }>
+                    <div class={ style.anchor }></div>
+                </div>
             </div>
             <div class={ style.b }>
-                <div class={ style.map }></div>
+                <span class={ style.name }>Blue</span>
+                <span class={ style.value }>100</span>
+                <div class={ style.map }>
+                    <div class={ style.anchor }></div>
+                </div>
             </div>
             <div class={ style.a }>
-                <div class={ style.map }></div>
+                <span class={ style.name }>Alpha</span>
+                <span class={ style.value }>100</span>
+                <div class={ style.map }>
+                    <div class={ style.anchor }></div>
+                    <div class={ style.overlay }></div>
+                </div>
             </div>
         </div>
     );
