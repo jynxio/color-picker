@@ -90,7 +90,12 @@ function RgbColorMap ( props ) {
 
         if ( ! is_down ) return;
 
-        const next_color_value = ( event.screenX - previous_x ) / anchor_dom_width * 255 + previous_color_value;
+        let next_color_value = ( event.screenX - previous_x ) / anchor_dom_width * 255 + previous_color_value;
+
+        next_color_value = Math.round( next_color_value );
+
+        if ( next_color_value < 0 ) next_color_value = 0;
+        if ( next_color_value > 255 ) next_color_value = 255;
 
         setColorValue( next_color_value );
 
