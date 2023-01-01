@@ -30,18 +30,18 @@
 }
 
 /* -------------------------------------------------------------------------------------------- */
-.color-text {
+.text {
     justify-self: start;
     align-self: end;
 }
 
-.color-value {
+.value {
     justify-self: end;
     align-self: end;
 }
 
 /* -------------------------------------------------------------------------------------------- */
-.color-map {
+.range {
     position: relative;
 
     grid-column: 1 / 3;
@@ -55,19 +55,19 @@
     border-radius: var( --border-radius );
 }
 
-.red > .color-map {
+.red > .range {
     background-image: linear-gradient( to right, #000, #f00 );
 }
 
-.green > .color-map {
+.green > .range {
     background-image: linear-gradient( to right, #000, #0f0 );
 }
 
-.blue > .color-map {
+.blue > .range {
     background-image: linear-gradient( to right, #000, #00f );
 }
 
-.alpha > .color-map {
+.alpha > .range {
     background-color: #ffffff;
     background-image:
         linear-gradient( 45deg, #ccc 25%, transparent 0%, transparent 75%, #ccc 0% ),
@@ -87,13 +87,13 @@
     block-size: 100%;
 }
 
-.red > .color-map > .overlay,
-.green > .color-map > .overlay,
-.blue > .color-map > .overlay {
+.red > .range > .overlay,
+.green > .range > .overlay,
+.blue > .range > .overlay {
     background-image: none;
 }
 
-.alpha > .color-map > .overlay {
+.alpha > .range > .overlay {
     background-image: linear-gradient( 90deg, #fff0, #ffff );
 }
 
@@ -130,6 +130,6 @@
     cursor: pointer;
 }
 
-.alpha > .color-map > .anchor > span {
+.alpha > .range > .anchor > span {
     background-color: #ccc;
 }
