@@ -140,3 +140,9 @@ function RgbPicker () {
     }
 
 }
+
+function RgbRibbon ( props ) {
+
+    
+
+}
