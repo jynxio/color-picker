@@ -1,12 +1,10 @@
 import style from "./picker.module.css";
 
-import { For } from "solid-js";
+import ColorContext from "/source/context/ColorContext";
 
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, useContext, onMount, onCleanup } from "solid-js";
 
-import { onMount, onCleanup } from "solid-js";
-
-export default function () {
+export default function ( props ) {
 
     return <RgbPicker />;
 
@@ -14,10 +12,30 @@ export default function () {
 
 function RgbPicker () {
 
-    const [ getRed, setRed ] = createSignal( 128 );
-    const [ getGreen, setGreen ] = createSignal( 128 );
-    const [ getBlue, setBlue ] = createSignal( 128 );
-    const [ getAlpha, setAlpha ] = createSignal( 128 );
+    const [ getRed, setRed ] = createSignal( 0 );
+    const [ getGreen, setGreen ] = createSignal( 0 );
+    const [ getBlue, setBlue ] = createSignal( 0 );
+    const [ getAlpha, setAlpha ] = createSignal( 255 );
+
+    const setHexColor = useContext( ColorContext );
+
+    createEffect( _ => {
+
+        let red = getRed().toString( 16 );
+        let green = getGreen().toString( 16 );
+        let blue = getBlue().toString( 16 );
+        let alpha = getAlpha().toString( 16 );
+
+        if ( red.length < 2 ) red = "0" + red;
+        if ( green.length < 2 ) green = "0" + green;
+        if ( blue.length < 2 ) blue = "0" + blue;
+        if ( alpha.length < 2 ) alpha = "0" + alpha;
+
+        const color = "#" + red + green + blue + alpha;
+
+        setHexColor( color );
+
+    } );
 
     return (
         <div class={ style.picker }>

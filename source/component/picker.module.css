@@ -32,18 +32,24 @@
     grid-template-rows: auto 2em;
     grid-template-columns: 1fr 1fr;
 
-    block-size: 4em;
+    margin-block-start: 1em;
 }
 
 /* -------------------------------------------------------------------------------------------- */
 .picker > .color > .text {
     justify-self: start;
-    align-self: end;
+    align-self: center;
+
+    line-height: 1.35;
+    font-size: 1.25em;
 }
 
 .picker > .color > .value {
     justify-self: end;
-    align-self: end;
+    align-self: center;
+
+    line-height: 1.35;
+    font-size: 1.25em;
 }
 
 /* -------------------------------------------------------------------------------------------- */
@@ -145,11 +151,12 @@
     align-items: center;
     flex-wrap: wrap;
 
-    margin-block-start: 1em;
+    margin-block-start: 1.65em;
 }
 
 .picker > .output > span {
     margin-inline: 0.2em;
+    margin-block: 0.2em;
 }
 
 .picker > .output > span.content {
