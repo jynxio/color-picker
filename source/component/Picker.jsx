@@ -64,7 +64,7 @@ function RgbRibbon ( props ) {
     const text = name[ 0 ].toUpperCase().concat( ... name.slice( 1 ) );
 
     return (
-        <div class={ style[ props.name ] }>
+        <div class={ `${ style.color } ${ style[ props.name ] }` }>
             <span class={ style.text }>{ text }</span>
             <span class={ style.value }>{ props.value }</span>
             <div class={ style.range }>
@@ -119,20 +119,25 @@ function RgbOutput ( props ) {
                 { calculateHex( props.red, props.green, props.blue, props.alpha ) }
             </span>
             <span class={ style.toggle }>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 21 7 17 3"></polyline><line x1="21" y1="7" x2="9" y2="7"></line><polyline points="7 21 3 17 7 13"></polyline><line x1="15" y1="17" x2="3" y2="17"></line></svg>
+                <button>Toggle</button>
             </span>
             <span class={ style.copy }>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <button>Copy</button>
             </span>
         </div>
     );
 
     function calculateHex ( r, g, b, a ) {
 
-        const hex_r = r.toString( 16 );
-        const hex_g = g.toString( 16 );
-        const hex_b = b.toString( 16 );
-        const hex_a = a.toString( 16 );
+        let hex_r = r.toString( 16 );
+        let hex_g = g.toString( 16 );
+        let hex_b = b.toString( 16 );
+        let hex_a = a.toString( 16 );
+
+        if ( hex_r.length < 2 ) hex_r = "0" + hex_r;
+        if ( hex_g.length < 2 ) hex_g = "0" + hex_g;
+        if ( hex_b.length < 2 ) hex_b = "0" + hex_b;
+        if ( hex_a.length < 2 ) hex_a = "0" + hex_a;
 
         return "#" + hex_r + hex_g + hex_b + hex_a;
 
