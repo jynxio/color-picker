@@ -8,13 +8,13 @@ import { createSignal } from "solid-js";
 
 export default function App () {
 
-    const [ getHexColor, setHexColor ] = createSignal( "#00000000" );
+    const [ getBackgroundColor, setBackgroundColor ] = createSignal( "#00000000" );
 
     return (
-        <ColorContext.Provider value={ setHexColor }>
+        <ColorContext.Provider value={ setBackgroundColor }>
             <div
                 class={ style.container }
-                style={ { "background-color": getHexColor() } }
+                style={ { "background-color": getBackgroundColor() } }
             >
                 <Picker />
             </div>

@@ -2,7 +2,7 @@ import style from "./picker.module.css";
 
 import ColorContext from "/source/context/ColorContext";
 
-import { createSignal, createEffect, useContext, onMount, onCleanup } from "solid-js";
+import { createSignal, createEffect, useContext, onMount, onCleanup, Switch, Match } from "solid-js";
 
 export default function ( props ) {
 
@@ -17,23 +17,13 @@ function RgbPicker () {
     const [ getBlue, setBlue ] = createSignal( 0 );
     const [ getAlpha, setAlpha ] = createSignal( 255 );
 
-    const setHexColor = useContext( ColorContext );
+    const setBackgroundColor = useContext( ColorContext );
 
     createEffect( _ => {
 
-        let red = getRed().toString( 16 );
-        let green = getGreen().toString( 16 );
-        let blue = getBlue().toString( 16 );
-        let alpha = getAlpha().toString( 16 );
+        const color = calculateHexStringFromRgba( getRed(), getGreen(), getBlue(), getAlpha() );
 
-        if ( red.length < 2 ) red = "0" + red;
-        if ( green.length < 2 ) green = "0" + green;
-        if ( blue.length < 2 ) blue = "0" + blue;
-        if ( alpha.length < 2 ) alpha = "0" + alpha;
-
-        const color = "#" + red + green + blue + alpha;
-
-        setHexColor( color );
+        setBackgroundColor( color );
 
     } );
 
@@ -131,34 +121,92 @@ function RgbRibbon ( props ) {
 
 function RgbOutput ( props ) {
 
+    const [ getMode, setMode ] = createSignal( "hex" ); // "hex" or "rgb"
+
     return (
         <div class={ style.output }>
-            <span class={ style.content }>
-                { calculateHex( props.red, props.green, props.blue, props.alpha ) }
-            </span>
-            <span class={ style.toggle }>
-                <button>Toggle</button>
-            </span>
-            <span class={ style.copy }>
-                <button>Copy</button>
-            </span>
+            <pre onPointerUp={ handlePointerUpEvent }>
+                <Switch fallback={ "Error" }>
+                    <Match when={ getMode() === "hex" }>{ calculateHexStringFromRgba( props.red, props.green, props.blue, props.alpha ) }</Match>
+                    <Match when={ getMode() === "rgb" }>{ calculateRgbStringFromRgba( props.red, props.green, props.blue, props.alpha ) }</Match>
+                </Switch>
+            </pre>
         </div>
     );
 
-    function calculateHex ( r, g, b, a ) {
+    function handlePointerUpEvent () {
 
-        let hex_r = r.toString( 16 );
-        let hex_g = g.toString( 16 );
-        let hex_b = b.toString( 16 );
-        let hex_a = a.toString( 16 );
-
-        if ( hex_r.length < 2 ) hex_r = "0" + hex_r;
-        if ( hex_g.length < 2 ) hex_g = "0" + hex_g;
-        if ( hex_b.length < 2 ) hex_b = "0" + hex_b;
-        if ( hex_a.length < 2 ) hex_a = "0" + hex_a;
-
-        return "#" + hex_r + hex_g + hex_b + hex_a;
+        setMode( getMode() === "hex" ? "rgb" : "hex" );
 
     }
+
+}
+
+/**
+ * 创建Hex格式的颜色字符串。
+ * @param { number } r - 红色值。
+ * @param { number } g - 绿色值。
+ * @param { number } b - 蓝色值。
+ * @param { number } a - 透明色值。
+ * @returns { string } - Hex格式的颜色字符串。
+ * @example
+ * f( 0, 0, 0, 255 ); // return "#000000ff"
+ */
+function calculateHexStringFromRgba ( r, g, b, a ) {
+
+    let string_r = r.toString( 16 );
+    let string_g = g.toString( 16 );
+    let string_b = b.toString( 16 );
+    let string_a = a.toString( 16 );
+
+    if ( string_r.length < 2 ) string_r = "0" + string_r;
+    if ( string_g.length < 2 ) string_g = "0" + string_g;
+    if ( string_b.length < 2 ) string_b = "0" + string_b;
+    if ( string_a.length < 2 ) string_a = "0" + string_a;
+
+    return "#" + string_r + string_g + string_b + string_a;
+
+}
+
+/**
+ * 创建RGB函数的参数字符串。
+ * @param { number } r - 红色值。
+ * @param { number } g - 绿色值。
+ * @param { number } b - 蓝色值。
+ * @param { number } a - 透明色值。
+ * @returns { string } - RGB函数的参数字符串。
+ * @example
+ * f( 0, 0, 0, 255 ); // return "  0  0  0 / 255"
+ */
+function calculateRgbStringFromRgba ( r, g, b, a ) {
+
+    let string_r = r.toString();
+    let string_g = g.toString();
+    let string_b = b.toString();
+    let string_a = a.toString();
+
+    string_r = createSpace( 3 - string_r.length ) + string_r;
+    string_g = createSpace( 3 - string_g.length ) + string_g;
+    string_b = createSpace( 3 - string_b.length ) + string_b;
+    string_a = createSpace( 3 - string_a.length ) + string_a;
+
+    return `${ string_r } ${ string_g } ${ string_b } / ${ string_a }`;
+
+}
+
+/**
+ * 创建拥有零至多个空白符的字符串。
+ * @param { number } count - 空白符的数量。
+ * @returns { string } - 拥有零至多个空白符的字符串。
+ * @example
+ * f( 2 ); // return "  "
+ */
+function createSpace ( count ) {
+
+    let space = "";
+
+    for ( let i = 0; i < count; i ++ ) space += " ";
+
+    return space;
 
 }
