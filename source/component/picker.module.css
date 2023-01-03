@@ -134,7 +134,6 @@
     background-color: transparent;
     background-clip: content-box;
 
-    /* box-shadow: 0 0 3px 3px #fff; */
     transform: translateX( -50% );
 
     cursor: pointer;
@@ -159,5 +158,6 @@
 
     border-block-end: 2px solid var( --font-color );
 
-    cursor: pointer;
+    cursor: help;
 }
+
