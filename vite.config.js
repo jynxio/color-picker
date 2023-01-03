@@ -27,7 +27,7 @@ export default defineConfig( ( {
             base: "/",
             publicDir: "public",
             server: {
-                host: true,
+                host: "localhost",
                 port: 8080,
                 open: true,
                 https: false,     // 使用@vitejs/plugin-basic-ssl来创建一个自签名的证书，详见https://cn.vitejs.dev/config/server-options.html#server-https
