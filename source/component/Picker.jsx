@@ -12,9 +12,9 @@ export default function ( props ) {
 
 function RgbPicker () {
 
-    const [ getRed, setRed ] = createSignal( 0 );
-    const [ getGreen, setGreen ] = createSignal( 0 );
-    const [ getBlue, setBlue ] = createSignal( 0 );
+    const [ getRed, setRed ] = createSignal( 35 );
+    const [ getGreen, setGreen ] = createSignal( 46 );
+    const [ getBlue, setBlue ] = createSignal( 28 );
     const [ getAlpha, setAlpha ] = createSignal( 255 );
 
     const setBackgroundColor = useContext( ColorContext );
@@ -123,20 +123,60 @@ function RgbOutput ( props ) {
 
     const [ getMode, setMode ] = createSignal( "hex" ); // "hex" or "rgb"
 
+    onMount( _ => {
+
+        globalThis.addEventListener( "keyup", handleKeyUpEvent );
+
+    } );
+
+    onCleanup( _ => {
+
+        globalThis.removeEventListener( "keyup", handleKeyUpEvent );
+
+    } );
+
     return (
         <div class={ style.output }>
-            <pre onPointerUp={ handlePointerUpEvent }>
+            <pre>
                 <Switch fallback={ "Error" }>
-                    <Match when={ getMode() === "hex" }>{ calculateHexStringFromRgba( props.red, props.green, props.blue, props.alpha ) }</Match>
-                    <Match when={ getMode() === "rgb" }>{ calculateRgbStringFromRgba( props.red, props.green, props.blue, props.alpha ) }</Match>
+                    <Match when={ getMode() === "hex" }>{ getHexString() }</Match>
+                    <Match when={ getMode() === "rgb" }>{ getRgbString() }</Match>
                 </Switch>
             </pre>
         </div>
     );
 
-    function handlePointerUpEvent () {
+    function handleKeyUpEvent ( event ) {
 
-        setMode( getMode() === "hex" ? "rgb" : "hex" );
+        const key = event.key.toLowerCase();
+
+        if ( key !== "shift" && key !== "c" ) return;
+
+        if ( key === "shift" ) {
+
+            setMode( getMode() === "hex" ? "rgb" : "hex" );
+
+            return;
+
+        }
+
+        const text = getMode() === "hex" ? getHexString() : getRgbString();
+
+        navigator.clipboard.writeText( text )
+            .then( _ => console.log( "写入成功" ) )
+            .catch( _ => console.error( "写入失败" ) );
+
+    }
+
+    function getHexString () {
+
+        return calculateHexStringFromRgba( props.red, props.green, props.blue, props.alpha );
+
+    }
+
+    function getRgbString () {
+
+        return calculateRgbStringFromRgba( props.red, props.green, props.blue, props.alpha );
 
     }
 
