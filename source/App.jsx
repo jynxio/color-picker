@@ -1,24 +1,39 @@
+/**
+ *
+ */
 import style from "./app.module.css";
 
-import ColorContext from "./context/ColorContext";
-
-import Picker from "./component/Picker";
-
+/**
+ *
+ */
 import { createSignal } from "solid-js";
 
+import Palette from "./component/Palette";
+
+import Output from "./component/Output";
+
+/**
+ *
+ */
 export default function App () {
 
-    const [ getBackgroundColor, setBackgroundColor ] = createSignal( "#00000000" );
+    const [ getRgb, setRgb ] = createSignal( [ 0, 0, 0, 1 ] );
+    const calculateColorString = _ => {
+
+        const [ r, g, b, a ] = getRgb();
+
+        return `rgb( ${ r } ${ g } ${ b } / ${ a } )`;
+
+    };
 
     return (
-        <ColorContext.Provider value={ setBackgroundColor }>
             <div
                 class={ style.container }
-                style={ { "background-color": getBackgroundColor() } }
+                style={ { "background-color": calculateColorString() } }
             >
-                <Picker />
+                <Palette />
+                <Output />
             </div>
-        </ColorContext.Provider>
     );
 
 }
