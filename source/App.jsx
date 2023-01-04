@@ -27,13 +27,13 @@ export default function App () {
     };
 
     return (
-            <div
-                class={ style.container }
-                style={ { "background-color": calculateColorString() } }
-            >
-                <Palette />
-                <Output />
-            </div>
+        <div
+            class={ style.container }
+            style={ { "background-color": calculateColorString() } }
+        >
+            <Palette />
+            <Output />
+        </div>
     );
 
 }
