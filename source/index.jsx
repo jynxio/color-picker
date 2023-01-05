@@ -10,6 +10,6 @@ import "/style/index.css";
  */
 import { render } from "solid-js/web";
 
-import App from "./App";
+import { App } from "./App";
 
 render( _ => <App />, document.getElementById( "solid-app" ) );
