@@ -6,24 +6,45 @@ import style from "./palette.module.css";
 /**
  *
  */
-import { createSignal, useContext, Show, For } from "solid-js";
+import { createSignal, useContext, Switch, Match, For } from "solid-js";
 
 import { GlobalColorContext } from "../context/GlobalColorContext";
 
 /**
  *
  */
-export function Palette ( props ) {
+function Palette ( props ) {
 
     return (
-        <Show when={ props.mode === "hsl" } fallback={ <HexOrRgb mode={ props.mode }/> }>
-            <Hsl/>
-        </Show>
+        <Switch>
+            <Match when={ props.mode === "hex" }>
+                <Hex/>
+            </Match>
+            <Match when={ props.mode === "rgb" }>
+                <Rgb/>
+            </Match>
+            <Match when={ props.mode === "hsl" }>
+                <Hsl/>
+            </Match>
+        </Switch>
     );
 
 }
 
-// TODO from mode attribute
+function Hex ( props ) {
+
+    const global_color = useContext( GlobalColorContext );
+
+    const getR = _ => global_color.getHex()[ 0 ];
+    const getG = _ => global_color.getHex()[ 1 ];
+    const getB = _ => global_color.getHex()[ 2 ];
+    const getA = _ => global_color.getHex()[ 3 ];
+
+}
+
+function Rgb ( props ) {}
+
+function Hsl ( props ) {}
 
 function HexOrRgb ( props ) {
 
@@ -42,8 +63,6 @@ function HexOrRgb ( props ) {
     );
 
 }
-
-function Hsl () {}
 
 /**
  * 色带。
@@ -76,3 +95,8 @@ function Ribbon ( props ) {
     );
 
 }
+
+/**
+ *
+ */
+export { Palette };

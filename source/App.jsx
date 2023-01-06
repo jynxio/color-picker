@@ -12,7 +12,7 @@ import { GlobalColorContext } from "./context/GlobalColorContext";
 
 import { createRgbString } from "./helper/colorFormatConvertor";
 
-// import { Palette } from "./component/Palette";
+import { Palette } from "./component/Palette";
 
 // import { Output } from "./component/Output";
 
