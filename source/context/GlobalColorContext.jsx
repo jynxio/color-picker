@@ -18,13 +18,11 @@ const [ getColor, setColor ] = createSignal( {
     hsl: initial_hsl,
 } );
 
-const GlobalColorContext = createContext( { getHex, getRgb, getHsl, setHex, setRgb, setHsl } );
+const getHex = _ => [ ... getColor().hex ];
+const getRgb = _ => [ ... getColor().rgb ];
+const getHsl = _ => [ ... getColor().hsl ];
 
-function getHex () { return [ ... getColor().hex ] }
-function getRgb () { return [ ... getColor().rgb ] }
-function getHsl () { return [ ... getColor().hsl ] }
-
-function setHex ( hex ) {
+const setHex = hex => {
 
     hex = [ ... hex ];
 
@@ -33,8 +31,8 @@ function setHex ( hex ) {
 
     setColor( { hex, rgb, hsl } );
 
-}
-function setRgb ( rgb ) {
+};
+const setRgb = rgb => {
 
     rgb = [ ... rgb ];
 
@@ -43,8 +41,8 @@ function setRgb ( rgb ) {
 
     setColor( { hex, rgb, hsl } );
 
-}
-function setHsl ( hsl ) {
+};
+const setHsl = hsl => {
 
     hsl = [ ... hsl ];
 
@@ -53,7 +51,9 @@ function setHsl ( hsl ) {
 
     setColor( { hex, rgb, hsl } );
 
-}
+};
+
+const GlobalColorContext = createContext( { getHex, getRgb, getHsl, setHex, setRgb, setHsl } );
 
 /**
  *
