@@ -1,29 +1,32 @@
 /**
  *
  */
-import style from "./palette.module.css"; // TODO
+import style from "./palette.module.css";
 
 /**
  *
  */
-import { createSignal, useContext, Switch, Match, For, onMount, onCleanup } from "solid-js";
+import { createSignal, useContext, Switch, Match, For, onMount, onCleanup, createMemo } from "solid-js";
 
 import { GlobalColorContext } from "../context/GlobalColorContext";
 
 /**
- *
+ * Palette组件构造器。
+ * @param { Object } props - 参数字典。
+ * @param { string } props.format - 颜色格式，仅限于"hex"、"rgb"、"hsl"中的一种。
+ * @returns { JSX } - Palette组件。
  */
 function Palette ( props ) {
 
     return (
         <Switch>
-            <Match when={ props.mode === "hex" }>
+            <Match when={ props.format === "hex" }>
                 <Hex/>
             </Match>
-            <Match when={ props.mode === "rgb" }>
+            <Match when={ props.format === "rgb" }>
                 <Rgb/>
             </Match>
-            <Match when={ props.mode === "hsl" }>
+            <Match when={ props.format === "hsl" }>
                 <Hsl/>
             </Match>
         </Switch>
@@ -31,7 +34,7 @@ function Palette ( props ) {
 
 }
 
-function Hex ( props ) {
+function Hex () {
 
     const global_color = useContext( GlobalColorContext );
 
@@ -45,63 +48,58 @@ function Hex ( props ) {
     const setB = b => global_color.setHex( [ getR(), getG(), b, getA() ] );
     const setA = a => global_color.setHex( [ getR(), getG(), getB(), a ] );
 
-    const ribbons = [
-        { name: "red", minimum: 0, maximum:255, unit: "number", getValue: getR, setValue: setR },
-        { name: "green", minimum: 0, maximum:255, unit: "number", getValue: getG, setValue: setG },
-        { name: "blue", minimum: 0, maximum:255, unit: "number", getValue: getB, setValue: setB },
-        { name: "alpha", minimum: 0, maximum:255, unit: "number", getValue: getA, setValue: setA },
-    ];
-
     return (
         <div class={ style.picker }>
-            <For each={ ribbons }>
-                {
-                    ribbon => {
-
-                        const { name, minimum, maximum, unit, getValue, setValue } = ribbon;
-
-                        return (
-                            <Ribbon
-                                name={ name }
-                                minimum={ minimum }
-                                maximum={ maximum }
-                                unit={ unit }
-                                getValue={ getValue }
-                                setValue={ setValue }
-                            />
-                        );
-
-                    }
-                }
-            </For>
-        </div>
-    );
-
-    return (
-        <div class={ style.picker }>
-            <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
-            <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
-            <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
-            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
+            <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getR() } setValue={ setR }/>
+            <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getG() } setValue={ setG }/>
+            <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getB() } setValue={ setB }/>
+            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getA() } setValue={ setA }/>
         </div>
     );
 
 }
 
-function Rgb ( props ) {}
+function Rgb () {
+
+    const global_color = useContext( GlobalColorContext );
+
+    const getR = _ => global_color.getRgb()[ 0 ];
+    const getG = _ => global_color.getRgb()[ 1 ];
+    const getB = _ => global_color.getRgb()[ 2 ];
+    const getA = _ => global_color.getRgb()[ 3 ];
+
+    const setR = r => global_color.setRgb( [ r, getG(), getB(), getA() ] );
+    const setG = g => global_color.setRgb( [ getR(), g, getB(), getA() ] );
+    const setB = b => global_color.setRgb( [ getR(), getG(), b, getA() ] );
+    const setA = a => global_color.setRgb( [ getR(), getG(), getB(), a ] );
+
+    return (
+        <div class={ style.picker }>
+            <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getR() } setValue={ setR }/>
+            <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getG() } setValue={ setG }/>
+            <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getB() } setValue={ setB }/>
+            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } value={ Math.round( getA() * 100 ) } setValue={ a => setA( a / 100 ) }/>
+        </div>
+    );
+
+}
 
 function Hsl ( props ) {}
 
 /**
- * 色带。
+ * 色带组件构造器。
  * @param { Object } props - 参数字典。
- * @param { string } props.name - 色带名（仅支持"red"、"green"、"blue"、"alpha"）。
+ * @param { string } props.name - 名称，仅限于"red"、"green"、"blue"、"alpha"中的一种。
  * @param { number } props.minimum - 最小值。
  * @param { number } props.maximum - 最大值。
- * @param { string } props.unit - 值的单位（仅支持"number"、"percentage"）。
- * @returns { JSX } - 色带。
+ * @param { number } props.value - 值。
+ * @param { string } props.unit - 单位。
+ * @param { Function } props.setValue - 值的setter。
+ * @returns { JSX } - 色带组件。
  */
 function Ribbon ( props ) {
+
+    const getValue = createMemo( _ => props.value );
 
     let dom;
     let width;
@@ -134,13 +132,13 @@ function Ribbon ( props ) {
     return (
         <div class={ `${ style.color } ${ style[ props.name ] }` }>
             <span class={ style.text }>{ getUpperCamelCaseName() }</span>
-            <span class={ style.value }>{ props.getValue() + ( props.unit === "number" ? "" : "%" ) }</span>
+            <span class={ style.value }>{ getValue() + props.unit }</span>
             <div class={ style.range }>
                 <div class={ style.overlay }></div>
                 <div class={ style.anchor } ref={ dom }>
                     <span
                         onPointerDown={ handlePointerDownEvent }
-                        style={ { left: ( props.getValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%" } }
+                        style={ { left: ( getValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%" } }
                     ></span>
                 </div>
             </div>
@@ -157,7 +155,7 @@ function Ribbon ( props ) {
 
         active = true;
 
-        base_value = props.getValue();
+        base_value = getValue();
         base_position = event.screenX;
 
     }
