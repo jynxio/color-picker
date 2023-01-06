@@ -1,7 +1,7 @@
 /**
  *
  */
-import style from "./picker.module.css"; // TODO
+import style from "./palette.module.css"; // TODO
 
 /**
  *
@@ -45,12 +45,44 @@ function Hex ( props ) {
     const setB = b => global_color.setHex( [ getR(), getG(), b, getA() ] );
     const setA = a => global_color.setHex( [ getR(), getG(), getB(), a ] );
 
+    const ribbons = [
+        { name: "red", minimum: 0, maximum:255, unit: "number", getValue: getR, setValue: setR },
+        { name: "green", minimum: 0, maximum:255, unit: "number", getValue: getG, setValue: setG },
+        { name: "blue", minimum: 0, maximum:255, unit: "number", getValue: getB, setValue: setB },
+        { name: "alpha", minimum: 0, maximum:255, unit: "number", getValue: getA, setValue: setA },
+    ];
+
     return (
         <div class={ style.picker }>
-            <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 }/>
-            <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 }/>
-            <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 }/>
-            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 255 }/>
+            <For each={ ribbons }>
+                {
+                    ribbon => {
+
+                        const { name, minimum, maximum, unit, getValue, setValue } = ribbon;
+
+                        return (
+                            <Ribbon
+                                name={ name }
+                                minimum={ minimum }
+                                maximum={ maximum }
+                                unit={ unit }
+                                getValue={ getValue }
+                                setValue={ setValue }
+                            />
+                        );
+
+                    }
+                }
+            </For>
+        </div>
+    );
+
+    return (
+        <div class={ style.picker }>
+            <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
+            <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
+            <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
+            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 255 } unit={ "number" }/>
         </div>
     );
 
@@ -70,8 +102,6 @@ function Hsl ( props ) {}
  * @returns { JSX } - 色带。
  */
 function Ribbon ( props ) {
-
-    const [ getValue, setValue ] = createSignal( 128 );
 
     let dom;
     let width;
@@ -104,13 +134,13 @@ function Ribbon ( props ) {
     return (
         <div class={ `${ style.color } ${ style[ props.name ] }` }>
             <span class={ style.text }>{ getUpperCamelCaseName() }</span>
-            <span class={ style.value }>{ 128 }</span>
+            <span class={ style.value }>{ props.getValue() + ( props.unit === "number" ? "" : "%" ) }</span>
             <div class={ style.range }>
                 <div class={ style.overlay }></div>
                 <div class={ style.anchor } ref={ dom }>
                     <span
                         onPointerDown={ handlePointerDownEvent }
-                        style={ { left: getValue() / 255 * 100 + "%" } }
+                        style={ { left: ( props.getValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%" } }
                     ></span>
                 </div>
             </div>
@@ -127,7 +157,7 @@ function Ribbon ( props ) {
 
         active = true;
 
-        base_value = getValue();
+        base_value = props.getValue();
         base_position = event.screenX;
 
     }
@@ -137,13 +167,14 @@ function Ribbon ( props ) {
         if ( ! active ) return;
 
         let next_value;
+        let next_position = event.screenX;
 
-        next_value = ( event.screenX - base_position ) / width * props.maximum + base_value;
+        next_value = ( next_position - base_position ) / width * ( props.maximum - props.minimum ) + base_value;
         next_value = Math.min( next_value, props.maximum );
         next_value = Math.max( next_value, props.minimum );
         next_value = Math.round( next_value );
 
-        setValue( next_value );
+        props.setValue( next_value );
 
     }
 
