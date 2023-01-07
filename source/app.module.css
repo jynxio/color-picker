@@ -1,3 +1,11 @@
+:root {
+    --border-radius: 5px;
+    --border-width: 2px;
+
+    --font-color: #fff;
+    --font-family: monospace;
+}
+
 body {
     background-color: #ffffff;
     background-image:
