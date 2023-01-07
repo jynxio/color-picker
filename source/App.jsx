@@ -24,7 +24,7 @@ function App () {
     const global_color = useContext( GlobalColorContext );
 
     const formats = [ "hex", "rgb", "hsl" ];
-    const [ getFormat, setFormat ] = createSignal( formats[ 0 ] );
+    const [ getFormat, setFormat ] = createSignal( formats[ 2 ] );
 
     onMount( _ => globalThis.addEventListener( "keydown", handleKeyDownEvent ) );
     onCleanup( _ => globalThis.removeEventListener( "keydown", handleKeyDownEvent ) );
