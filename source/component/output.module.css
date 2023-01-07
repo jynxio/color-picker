@@ -1,0 +1,16 @@
+.output {
+    margin-block-start: 1.65em;
+    text-align: center;
+}
+
+.output > pre {
+    display: inline;
+
+    padding-inline: 0.35em;
+
+    font-size: 2em;
+
+    border-block-end: 2px solid var( --font-color );
+
+    cursor: help;
+}
