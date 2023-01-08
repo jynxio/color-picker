@@ -2,17 +2,17 @@
     --border-radius: 5px;
     --border-width: 2px;
 
+    --ribbon-width: 22px;
+
     --font-color: #fff;
     --font-family: monospace;
 }
 
 body {
-    background-color: #ffffff;
-    background-image:
-        linear-gradient( 45deg, #c8c8c8 25%, transparent 0%, transparent 75%, #c8c8c8 0% ),
-        linear-gradient( 45deg, #c8c8c8 25%, transparent 0%, transparent 75%, #c8c8c8 0% );
-    background-position: 0 0, 6px 6px;
+    background-image: conic-gradient( #fff 0deg 90deg, #c8c8c8 90deg 180deg, #fff 180deg 270deg, #c8c8c8 270deg 360deg );
+    background-position: top left;
     background-size: 12px 12px;
+    background-repeat: repeat;
 }
 
 .container {
@@ -24,5 +24,9 @@ body {
 
     inline-size: 100%;
     block-size: 100%;
-    padding-inline: calc( 50% - 15em );
+    padding-inline: calc( 50% - 15rem );
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }

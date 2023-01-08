@@ -1,9 +1,9 @@
-.picker {
+.palette {
     display: flex;
     flex-direction: column;
 
     inline-size: 100%;
-    padding: 1em;
+    padding: 1rem;
 
     color: var( --font-color );
     font-family: var( --font-family );
@@ -11,8 +11,4 @@
     border-radius: var( --border-radius );
 
     background-color: #000;
-
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
 }

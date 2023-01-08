@@ -1,0 +1,68 @@
+/* -------------------------------------------------------------------------------------------- */
+.wheel {
+    position: relative;
+
+    color: var( --font-color );
+    background-color: pink;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.wheel > .info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate( -50%, -50% );
+}
+
+.wheel > .info > .name,
+.wheel > .info > .value {
+    margin-block: 0.5rem;
+
+    text-align: center;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.wheel > .ring {
+    position: relative;
+
+    inline-size: 20rem;
+    block-size: 20rem;
+
+    border-radius: 999rem;
+    border: var( --border-width ) solid #fff;
+
+    background-image: conic-gradient( #f00 0deg, #0f0 120deg, #00f 240deg, #f00 360deg );
+}
+
+.wheel > .ring > .overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    inline-size: calc( 100% - var( --ribbon-width ) * 2 );
+    block-size: calc( 100% - var( --ribbon-width ) * 2 );
+
+    border-radius: 999rem;
+    border: var( --border-width ) solid #fff;
+
+    background-color: #000;
+    transform: translate( -50%, -50% );
+}
+
+.wheel > .ring > .anchor {
+    box-sizing: content-box;
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    inline-size: 5px;
+    block-size: var( --ribbon-width );
+    border: var( --border-width ) solid #fff;
+    outline: var( --border-width ) solid #000;
+
+    background-color: transparent;
+    cursor: pointer;
+}

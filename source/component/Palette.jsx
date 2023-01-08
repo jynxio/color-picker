@@ -6,7 +6,7 @@ import style from "./palette.module.css";
 /**
  *
  */
-import { useContext, Switch, Match } from "solid-js";
+import { useContext, Switch, Match, createSignal, onMount } from "solid-js";
 
 import { GlobalColorContext } from "../context/GlobalColorContext";
 
@@ -53,7 +53,7 @@ function Hex () {
     const setA = a => global_color.setHex( [ getR(), getG(), getB(), a ] );
 
     return (
-        <div class={ style.picker }>
+        <div class={ style.palette }>
             <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getR() } setValue={ setR }/>
             <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getG() } setValue={ setG }/>
             <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getB() } setValue={ setB }/>
@@ -78,7 +78,7 @@ function Rgb () {
     const setA = a => global_color.setRgb( [ getR(), getG(), getB(), a ] );
 
     return (
-        <div class={ style.picker }>
+        <div class={ style.palette }>
             <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getR() } setValue={ setR }/>
             <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getG() } setValue={ setG }/>
             <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getB() } setValue={ setB }/>
@@ -90,7 +90,11 @@ function Rgb () {
 
 function Hsl () {
 
-    return <Wheel/>;
+    const [ getValue, setValue ] = createSignal( 0 );
+
+    onMount( _ => globalThis.addEventListener( "click", _ => setValue( prev => prev + 5 ) ) );
+
+    return <Wheel value={ getValue() }/>;
 
 }
 

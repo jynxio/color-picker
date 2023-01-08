@@ -1,14 +1,14 @@
 .output {
-    margin-block-start: 1.65em;
+    margin-block-start: 1.65rem;
     text-align: center;
 }
 
 .output > pre {
     display: inline;
 
-    padding-inline: 0.35em;
+    padding-inline: 0.35rem;
 
-    font-size: 2em;
+    font-size: 2rem;
 
     border-block-end: 2px solid var( --font-color );
 
