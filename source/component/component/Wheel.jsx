@@ -40,10 +40,10 @@ function Wheel ( props ) {
 
     onCleanup( _ => {
 
-        document.documentElement.style.setProperty( "cursor", "" );
-
         globalThis.removeEventListener( "pointerup", handlePointerUpEvent );
         globalThis.removeEventListener( "pointermove", handlePointerMoveEvent );
+
+        document.documentElement.style.setProperty( "cursor", "" );
 
     } );
 
