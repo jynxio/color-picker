@@ -55,6 +55,8 @@ const setHsl = hsl => {
 
 const GlobalColorContext = createContext( { getHex, getRgb, getHsl, setHex, setRgb, setHsl } );
 
+// TODO 其实直接export{ getHex, getRgb, getHsl, setHex, setRgb, setHsl } 就行了...不需要使用context
+
 /**
  *
  */

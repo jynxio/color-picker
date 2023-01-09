@@ -3,7 +3,6 @@
     position: relative;
 
     color: var( --font-color );
-    background-color: pink;
 }
 
 /* -------------------------------------------------------------------------------------------- */
@@ -52,7 +51,7 @@
     transform: translate( -50%, -50% );
 }
 
-.wheel > .ring > .anchor {
+.wheel > .anchor {
     box-sizing: content-box;
     position: absolute;
     top: 0;
