@@ -2,6 +2,9 @@
 .wheel {
     position: relative;
 
+    inline-size: 20rem;
+    block-size: 20rem;
+
     color: var( --font-color );
 }
 
@@ -27,8 +30,8 @@
 .wheel > .ring {
     position: relative;
 
-    inline-size: 20rem;
-    block-size: 20rem;
+    inline-size: 100%;
+    block-size: 100%;
 
     border-radius: 999rem;
     border: var( --border-width ) solid #fff;
