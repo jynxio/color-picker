@@ -6,7 +6,7 @@ import style from "./ribbon.module.css";
 /**
  *
  */
-import { onMount, onCleanup, createMemo } from "solid-js";
+import { onMount, onCleanup, createMemo, createSignal, createEffect } from "solid-js";
 
 /**
  * 色带组件构造器。
@@ -22,6 +22,7 @@ import { onMount, onCleanup, createMemo } from "solid-js";
 function Ribbon ( props ) {
 
     const getValue = createMemo( _ => props.value );
+    const [ getActive, setActive ] = createSignal( false );
 
     let dom;
     let width;
@@ -29,9 +30,17 @@ function Ribbon ( props ) {
     let base_value;
     let base_position;
 
-    let active = false;
-
     const observer = new ResizeObserver( entries => width = entries[ 0 ].contentBoxSize[ 0 ].inlineSize );
+
+    createEffect( _ => {
+
+        document.documentElement.style.setProperty(
+            "cursor",
+            getActive() ? "ew-resize" : "",
+            getActive() ? "important" : "",
+        );
+
+    } );
 
     onMount( _ => {
 
@@ -49,6 +58,8 @@ function Ribbon ( props ) {
         globalThis.removeEventListener( "pointerup", handlePointerUpEvent );
         globalThis.removeEventListener( "pointermove", handlePointerMoveEvent );
 
+        document.documentElement.style.setProperty( "cursor", "" );
+
     } );
 
     return (
@@ -60,22 +71,31 @@ function Ribbon ( props ) {
                 <div class={ style.anchor } ref={ dom }>
                     <span
                         onPointerDown={ handlePointerDownEvent }
-                        style={ { left: ( getValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%" } }
+                        style={ createStyle() }
                     ></span>
                 </div>
             </div>
         </div>
     );
 
+    function createStyle () {
+
+        return ( {
+            left: ( getValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%",
+            cursor: getActive() ? "ew-resize" : "grab",
+        } );
+
+    }
+
     function handlePointerUpEvent () {
 
-        active = false;
+        setActive( false );
 
     }
 
     function handlePointerDownEvent ( event ) {
 
-        active = true;
+        setActive( true );
 
         base_value = getValue();
         base_position = event.screenX;
@@ -84,7 +104,7 @@ function Ribbon ( props ) {
 
     function handlePointerMoveEvent ( event ) {
 
-        if ( ! active ) return;
+        if ( ! getActive() ) return;
 
         let next_value;
         let next_position = event.screenX;
