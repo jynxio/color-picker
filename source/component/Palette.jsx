@@ -67,22 +67,22 @@ function Rgb () {
 
     const global_color = useContext( GlobalColorContext );
 
-    const getR = _ => global_color.getRgb()[ 0 ];
-    const getG = _ => global_color.getRgb()[ 1 ];
-    const getB = _ => global_color.getRgb()[ 2 ];
-    const getA = _ => global_color.getRgb()[ 3 ];
+    const getR = _ => Math.round( global_color.getRgb()[ 0 ] );
+    const getG = _ => Math.round( global_color.getRgb()[ 1 ] );
+    const getB = _ => Math.round( global_color.getRgb()[ 2 ] );
+    const getA = _ => Math.round( global_color.getRgb()[ 3 ] * 100 );
 
-    const setR = r => global_color.setRgb( [ r, getG(), getB(), getA() ] );
-    const setG = g => global_color.setRgb( [ getR(), g, getB(), getA() ] );
-    const setB = b => global_color.setRgb( [ getR(), getG(), b, getA() ] );
-    const setA = a => global_color.setRgb( [ getR(), getG(), getB(), a ] );
+    const setR = r => global_color.setRgb( [ r, getG(), getB(), getA() / 100 ] );
+    const setG = g => global_color.setRgb( [ getR(), g, getB(), getA() / 100 ] );
+    const setB = b => global_color.setRgb( [ getR(), getG(), b, getA() / 100 ] );
+    const setA = a => global_color.setRgb( [ getR(), getG(), getB(), a / 100 ] );
 
     return (
         <div class={ style.palette }>
             <Ribbon name={ "red" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getR() } setValue={ setR }/>
             <Ribbon name={ "green" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getG() } setValue={ setG }/>
             <Ribbon name={ "blue" } minimum={ 0 } maximum={ 255 } unit={ "" } value={ getB() } setValue={ setB }/>
-            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } value={ Math.round( getA() * 100 ) } setValue={ a => setA( a / 100 ) }/>
+            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } value={ getA() } setValue={ setA }/>
         </div>
     );
 
@@ -90,9 +90,24 @@ function Rgb () {
 
 function Hsl () {
 
-    const [ getValue, setValue ] = createSignal( 0 );
+    const global_color = useContext( GlobalColorContext );
 
-    return <Wheel value={ getValue() } setValue={ setValue }/>;
+    const getH = _ => Math.round( global_color.getHsl()[ 0 ] );
+    const getS = _ => Math.round( global_color.getHsl()[ 1 ] * 100 );
+    const getL = _ => Math.round( global_color.getHsl()[ 2 ] * 100 );
+    const getA = _ => Math.round( global_color.getHsl()[ 3 ] * 100 );
+
+    const setH = h => global_color.setHsl( [ h, getS() / 100, getL() / 100, getA() / 100 ] );
+    const setS = s => global_color.setHsl( [ getH(), s / 100, getL() / 100, getA() / 100 ] );
+    const setL = l => global_color.setHsl( [ getH(), getS() / 100, l / 100, getA() / 100 ] );
+    const setA = a => global_color.setHsl( [ getH(), getS() / 100, getL() / 100, a / 100 ] );
+
+    return (
+        <div class={ style.palette }>
+            <Wheel value={ getH() } setValue={ setH }/>
+            <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } value={ getA() } setValue={ setA }/>
+        </div>
+    );
 
 }
 
