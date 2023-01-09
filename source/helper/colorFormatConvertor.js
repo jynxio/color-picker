@@ -6,7 +6,7 @@
 /**
  * hex转rgb。
  * @param { number[] } hex - [red, green, blue, alpha]，其中red、green、blue、alpha是均属于[0, 255]的整数。
- * @returns { number[] } - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数。
+ * @returns { number[] } - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @example
  * f( [ 255, 255, 255, 255 ] ); // return [ 255, 255, 255, 1 ]
  */
@@ -19,7 +19,7 @@ export function hexToRgb ( [ r, g, b, a ] ) {
 /**
  * hex转hsl。
  * @param { number[] } hex - [red, green, blue, alpha]，其中red、green、blue、alpha是均属于[0, 255]的整数。
- * @returns { number[] } - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数。
+ * @returns { number[] } - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @example
  * f( [ 255, 255, 255, 255 ] ); // return [ 0, 0, 1, 1 ]
  */
@@ -34,7 +34,7 @@ export function hexToHsl ( [ r, g, b, a ] ) {
 
 /**
  * rgb转hex。
- * @param { number[] } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数。
+ * @param { number[] } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @returns { number[] } - [red, green, blue, alpha]，其中red、green、blue、alpha是均属于[0, 255]的整数。
  * @example
  * f( [ 255, 255, 255, 1 ] ); // return [ 255, 255, 255, 255 ]
@@ -51,8 +51,8 @@ export function rgbToHex ( [ r, g, b, a ] ) {
 
 /**
  * rgb转hsl。
- * @param { number[] } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数。
- * @returns { number[] } - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数。
+ * @param { number[] } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
+ * @returns { number[] } - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @tutorial https://www.30secondsofcode.org/js/s/rgb-to-hsl
  * @tutorial https://github.com/30-seconds/30-seconds-of-code/blob/master/snippets/RGBToHSL.md
  * @example
@@ -85,7 +85,7 @@ export function rgbToHsl ( [ r, g, b, a ] ) {
 
 /**
  * hsl转hex。
- * @param { number[] } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数。
+ * @param { number[] } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @returns { number[] } - [red, green, blue, alpha]，其中red、green、blue、alpha是均属于[0, 255]的整数。
  * @example
  * f( [ 13, 1, 0.11, 1 ] ); // return [ 56, 12, 0, 255 ]
@@ -117,8 +117,8 @@ export function hslToHex ( [ h, s, l, a ] ) {
  * hsl转rgb。
  * @tutorial https://www.30secondsofcode.org/js/s/hsl-to-rgb
  * @tutorial https://github.com/30-seconds/30-seconds-of-code/blob/master/snippets/HSLToRGB.md
- * @param { number[] } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数。
- * @returns { number[] } - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数。
+ * @param { number[] } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
+ * @returns { number[] } - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @example
  * f( [ 13, 1, 0.11, 1 ] ); // return [ 56.1, 12.155000000000006, 0, 1 ]
  */
@@ -154,7 +154,7 @@ export function createHexString ( hex ) {
 
 /**
  * 创建CSS的rgb()的入参字符串。
- * @param { number } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数。
+ * @param { number } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @returns { string } - CSS的rgb()的如惨字符串。
  * @example
  * f( [ 255, 255, 255, 1 ] ); // return "rgb( 255 255 255 / 1 )"
@@ -169,7 +169,7 @@ export function createRgbString ( rgb ) {
 
 /**
  * 创建CSS的hsl()的入参字符串。
- * @param { number } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数。
+ * @param { number } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
  * @returns { string } - CSS的hsl()的入参字符串。
  */
 export function createHslString ( hsl ) {
