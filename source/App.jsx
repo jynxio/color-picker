@@ -43,10 +43,7 @@ function App () {
 
         if ( event.key.toLowerCase() !== "shift" ) return;
 
-        let next_index = formats.indexOf( getFormat() ) + 1;
-
-        if ( next_index === formats.length ) next_index = 0;
-
+        const next_index = ( formats.indexOf( getFormat() ) + 1 ) % 3;
         const next_format = formats[ next_index ];
 
         setFormat( next_format );
