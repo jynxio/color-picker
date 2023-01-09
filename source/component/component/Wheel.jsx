@@ -1,7 +1,7 @@
 /**
  *
  */
-import { createMemo, onCleanup, onMount } from "solid-js";
+import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 
 import style from "./wheel.module.css";
 
@@ -15,10 +15,21 @@ import style from "./wheel.module.css";
  */
 function Wheel ( props ) {
 
-    let active = false;
+    const getValue = createMemo( _ => props.value );
+    const [ getActive, setActive ] = createSignal( false );
 
     let dom;
     let base_value, base_x, base_y;
+
+    createEffect( _ => {
+
+        document.documentElement.style.setProperty(
+            "cursor",
+            getActive() ? "all-scroll" : "",
+            getActive() ? "important" : "",
+        );
+
+    } );
 
     onMount( _ => {
 
@@ -29,12 +40,12 @@ function Wheel ( props ) {
 
     onCleanup( _ => {
 
+        document.documentElement.style.setProperty( "cursor", "" );
+
         globalThis.removeEventListener( "pointerup", handlePointerUpEvent );
         globalThis.removeEventListener( "pointermove", handlePointerMoveEvent );
 
     } );
-
-    const getValue = createMemo( _ => props.value );
 
     return (
         <div class={ style.wheel }>
@@ -45,11 +56,15 @@ function Wheel ( props ) {
                 <p class={ style.name }>Hue</p>
                 <p class={ style.value }>{ getValue() + "deg" }</p>
             </div>
-            <div class={ style.anchor } style={ createAnchorStyle() } onPointerDown={ handlePointerDownEvent }></div>
+            <div
+                class={ style.anchor }
+                style={ createStyle() }
+                onPointerDown={ handlePointerDownEvent }
+            ></div>
         </div>
     );
 
-    function createAnchorStyle () {
+    function createStyle () {
 
         const ring_width = "13px"; // 该值等于--ribbon-width和--border-width之和
 
@@ -60,42 +75,43 @@ function Wheel ( props ) {
         const left = `calc( ${ Math.sin( radian ) } * calc( 50% - ${ ring_width } ) + 50% )`;
         const transform = `translate( -50%, -50% ) rotate( ${ degree }deg )`;
 
-        return { top, left, transform };
+        const cursor = getActive() ? "all-scroll" : "grab";
+
+        return { top, left, transform, cursor };
 
     }
 
-    function handlePointerUpEvent () {
+    function handlePointerUpEvent ( event ) {
 
-        active = false;
+        setActive( false );
 
     }
 
     function handlePointerDownEvent ( event ) {
 
-        active = true;
+        setActive( true );
 
         base_value = getValue();
-        [ base_x, base_y ] = [ event.screenX, event.screenY ];
+        [ base_x, base_y ] = [ event.clientX, event.clientY ];
 
     }
 
     function handlePointerMoveEvent ( event ) {
 
-        if ( ! active ) return;
+        if ( ! getActive() ) return;
 
         const rect = dom.getBoundingClientRect();
-
         const origin_position = [ ( rect.right + rect.left ) / 2, ( rect.top + rect.bottom ) / 2 ];
         const base_position = [ base_x, base_y ];
-        const next_position = [ event.screenX, event.screenY ];
+        const next_position = [ event.clientX, event.clientY ];
 
         const vector_a = [ base_position[ 0 ] - origin_position[ 0 ], origin_position[ 1 ] - base_position[ 1 ] ];
         const vector_b = [ next_position[ 0 ] - origin_position[ 0 ], origin_position[ 1 ] - next_position[ 1 ] ];
 
         let delta_degree = calculateClockwiseAngle( vector_a, vector_b );
 
-        // props.setValue( Math.round( base_value + delta_degree ) % 360 );
-        // console.log( Math.round( delta_degree ) );
+        props.setValue( Math.round( base_value + delta_degree ) % 360 );
+
     }
 
 }
@@ -113,26 +129,14 @@ function calculateClockwiseAngle ( v_a, v_b ) {
 
     const cos_theta = calculateDotProduct( v_a, v_b ) / calculateNorm( v_a ) / calculateNorm( v_b );
 
-    if ( isNumberEqual( cos_theta, 1 ) ) { return 0 }
-    if ( isNumberEqual( cos_theta, - 1 ) ) { return 180 }
+    if ( isNumberEqual( cos_theta, 1 ) ) { return 0 }     // 处理共线情况
+    if ( isNumberEqual( cos_theta, - 1 ) ) { return 180 } // 处理共线情况
 
-    const z = calculateCrossProduct( v_a, v_b )[ 2 ];
     const theta = Math.acos( cos_theta );
+    const z = calculateCrossProduct( v_a, v_b )[ 2 ];
 
-    if ( z < 0 ) {
-
-        console.log( theta / Math.PI * 180 );
-
-        return theta / Math.PI * 180;
-
-    }
-    if ( z > 0 ) {
-
-        console.log( ( Math.PI * 2 - theta ) / Math.PI * 180 );
-
-        return ( Math.PI * 2 - theta ) / Math.PI * 180;
-
-    }
+    if ( z < 0 ) return theta / Math.PI * 180;
+    if ( z > 0 ) return ( Math.PI * 2 - theta ) / Math.PI * 180;
 
     throw( new Error( "Error: Unexpected situation" ) );
 

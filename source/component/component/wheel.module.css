@@ -51,6 +51,7 @@
     transform: translate( -50%, -50% );
 }
 
+/* -------------------------------------------------------------------------------------------- */
 .wheel > .anchor {
     box-sizing: content-box;
     position: absolute;
@@ -63,5 +64,4 @@
     outline: var( --border-width ) solid #000;
 
     background-color: transparent;
-    cursor: pointer;
 }
