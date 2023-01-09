@@ -17,7 +17,7 @@ function Wheel ( props ) {
 
     let active = false;
 
-    let ring_dom, anchor_dom;
+    let dom;
     let base_value, base_x, base_y;
 
     onMount( _ => {
@@ -38,14 +38,14 @@ function Wheel ( props ) {
 
     return (
         <div class={ style.wheel }>
-            <div class={ style.ring } ref={ ring_dom }>
+            <div class={ style.ring } ref={ dom }>
                 <div class={ style.overlay }></div>
             </div>
             <div class={ style.info }>
                 <p class={ style.name }>Hue</p>
                 <p class={ style.value }>{ getValue() + "deg" }</p>
             </div>
-            <div class={ style.anchor } style={ createAnchorStyle() } onPointerDown={ handlePointerDownEvent } ref={ anchor_dom }></div>
+            <div class={ style.anchor } style={ createAnchorStyle() } onPointerDown={ handlePointerDownEvent }></div>
         </div>
     );
 
@@ -83,8 +83,87 @@ function Wheel ( props ) {
 
         if ( ! active ) return;
 
-        const { top, right, bottom, left } = ring_dom.getBoundingClientRect();
-        const origin_position = [ ( right + left ) / 2, ( top + bottom ) / 2 ]; // TODO
+        const rect = dom.getBoundingClientRect();
+
+        const origin_position = [ ( rect.right + rect.left ) / 2, ( rect.top + rect.bottom ) / 2 ];
+        const base_position = [ base_x, base_y ];
+        const next_position = [ event.screenX, event.screenY ];
+
+        const vector_a = [ base_position[ 0 ] - origin_position[ 0 ], origin_position[ 1 ] - base_position[ 1 ] ];
+        const vector_b = [ next_position[ 0 ] - origin_position[ 0 ], origin_position[ 1 ] - next_position[ 1 ] ];
+
+        let delta_degree = calculateClockwiseAngle( vector_a, vector_b );
+
+        // props.setValue( Math.round( base_value + delta_degree ) % 360 );
+        // console.log( Math.round( delta_degree ) );
+    }
+
+}
+
+/**
+ * 计算平面向量A到平面向量B的顺时针角度。
+ * @param { number[] } v_a - 如[x, y]。
+ * @param { number[] } v_b - 如[x, y]。
+ * @returns { number } - 角度，单位为度，值域为[0, 360)。
+ */
+function calculateClockwiseAngle ( v_a, v_b ) {
+
+    v_a = [ ... v_a ];
+    v_b = [ ... v_b ];
+
+    const cos_theta = calculateDotProduct( v_a, v_b ) / calculateNorm( v_a ) / calculateNorm( v_b );
+
+    if ( isNumberEqual( cos_theta, 1 ) ) { return 0 }
+    if ( isNumberEqual( cos_theta, - 1 ) ) { return 180 }
+
+    const z = calculateCrossProduct( v_a, v_b )[ 2 ];
+    const theta = Math.acos( cos_theta );
+
+    if ( z < 0 ) {
+
+        console.log( theta / Math.PI * 180 );
+
+        return theta / Math.PI * 180;
+
+    }
+    if ( z > 0 ) {
+
+        console.log( ( Math.PI * 2 - theta ) / Math.PI * 180 );
+
+        return ( Math.PI * 2 - theta ) / Math.PI * 180;
+
+    }
+
+    throw( new Error( "Error: Unexpected situation" ) );
+
+    function calculateDotProduct ( v_a, v_b ) {
+
+        return v_a[ 0 ] * v_b[ 0 ] + v_a[ 1 ] * v_b[ 1 ];
+
+    }
+
+    function calculateCrossProduct( v_a, v_b ){
+
+        v_a = [ ... v_a, 0 ];
+        v_b = [ ... v_b, 0 ];
+
+        return [
+            v_a[ 1 ] * v_b[ 2 ] - v_b[ 1 ] * v_a[ 2 ],
+            v_b[ 0 ] * v_a[ 2 ] - v_a[ 0 ] * v_b[ 2 ],
+            v_a[ 0 ] * v_b[ 1 ] - v_b[ 0 ] * v_a[ 1 ],
+        ];
+
+    }
+
+    function calculateNorm ( v ) {
+
+        return Math.hypot( ... v );
+
+    }
+
+    function isNumberEqual ( n_a, n_b ) {
+
+        return Math.abs( n_a - n_b ) < Number.EPSILON;
 
     }
 

@@ -92,9 +92,7 @@ function Hsl () {
 
     const [ getValue, setValue ] = createSignal( 0 );
 
-    onMount( _ => globalThis.addEventListener( "click", _ => setValue( prev => prev + 5 ) ) );
-
-    return <Wheel value={ getValue() }/>;
+    return <Wheel value={ getValue() } setValue={ setValue }/>;
 
 }
 
