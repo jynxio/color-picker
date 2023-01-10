@@ -2,8 +2,8 @@
 .wheel {
     position: relative;
 
-    inline-size: 20rem;
-    block-size: 20rem;
+    inline-size: 16rem;
+    block-size: 16rem;
 
     color: var( --font-color );
 }
@@ -58,8 +58,6 @@
 .wheel > .anchor {
     box-sizing: content-box;
     position: absolute;
-    top: 0;
-    left: 50%;
 
     inline-size: 5px;
     block-size: var( --ribbon-width );
