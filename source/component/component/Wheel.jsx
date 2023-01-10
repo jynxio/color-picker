@@ -53,7 +53,7 @@ function Wheel ( props ) {
                 <div class={ style.overlay }></div>
             </div>
             <div class={ style.info }>
-                <p class={ style.name }>Hue</p>
+                <p class={ style.name }>{ props.name[ 0 ].toUpperCase().concat( props.name.slice( 1 ) ) }</p>
                 <p class={ style.value }>{ getValue() + "deg" }</p>
             </div>
             <div
