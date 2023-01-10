@@ -1,0 +1,90 @@
+/* -------------------------------------------------------------------------------------------- */
+.cartesian {
+    display: grid;
+    grid-template-rows: 1.5rem auto;
+    grid-template-columns: 1.5rem auto;
+
+    inline-size: 16rem;
+    block-size: 16rem;
+
+    color: var( --font-color );
+    font-family: ( --font-family );
+    font-size: 1rem;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.cartesian > .axis {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    align-self: center;
+    justify-self: center;
+
+    inline-size: 100%;
+}
+
+.cartesian > .axis.x {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+
+.cartesian > .axis.y {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+
+    writing-mode: vertical-rl;
+}
+
+.cartesian > .axis::before,
+.cartesian > .axis::after {
+    content: "";
+
+    flex-grow: 1;
+
+    block-size: 1px;
+
+    background-color: #fff;
+}
+
+.cartesian > .axis > span {
+    margin-inline: 1rem;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.cartesian > .board {
+    position: relative;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+
+    border-radius: var( --border-radius );
+    border: var( --border-width ) solid #fff;
+}
+
+.cartesian > .board > .mixcolor {
+    position: absolute;
+
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+.cartesian > .board > .mixcolor.lower {
+    background-image: linear-gradient( to top, rgb( 0 0 0 ), rgb( 255 255 255 ) );
+}
+
+.cartesian > .board > .mixcolor.upper {
+    background-image: linear-gradient( to right, hsl( 0deg 100% 50% / 0 ), hsl( 0deg 100% 50% / 1 ) );
+    mix-blend-mode: overlay;
+}
+
+.cartesian > .board > .anchor {
+    position: absolute;
+
+    inline-size: 1rem;
+    block-size: 1rem;
+
+    border-radius: 999rem;
+    border: var( --border-width ) solid #fff;
+    outline: var( --border-width ) solid #000;
+
+    transform: translate( -50%, -50% );
+}
