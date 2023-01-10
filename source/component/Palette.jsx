@@ -14,6 +14,8 @@ import { Ribbon } from "./component/Ribbon";
 
 import { Wheel } from "./component/Wheel";
 
+import { Cartesian } from "./component/Cartesian";
+
 /**
  * Palette组件构造器。
  * @param { Object } props - 参数字典。
@@ -104,7 +106,8 @@ function Hsl () {
 
     return (
         <div class={ style.palette }>
-            <Wheel value={ getH() } setValue={ setH }/>
+            <Cartesian />
+            <Wheel name={ "hue" } value={ getH() } setValue={ setH }/>
             <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } value={ getA() } setValue={ setA }/>
         </div>
     );
