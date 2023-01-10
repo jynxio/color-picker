@@ -98,7 +98,6 @@
     box-sizing: content-box;
     position: absolute;
     top: calc( -1 *  var( --border-width ) );
-    left: 100%;
 
     inline-size: 5px;
     block-size: 100%;
