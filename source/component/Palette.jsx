@@ -106,7 +106,7 @@ function Hsl () {
 
     return (
         <div class={ style.palette }>
-            <Cartesian />
+            <Cartesian names={ [ "saturation", "lightness" ] }/>
             <Wheel name={ "hue" } value={ getH() } setValue={ setH }/>
             <Ribbon name={ "alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } value={ getA() } setValue={ setA }/>
         </div>
