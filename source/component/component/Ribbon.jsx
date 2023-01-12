@@ -1,28 +1,25 @@
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 import style from "./ribbon.module.css";
 
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 import { onMount, onCleanup, createMemo, createSignal, createEffect } from "solid-js";
 
 /**
  * 色带组件构造器。
  * @param { Object } props - 参数字典。
  * @param { string } props.name - 名称，仅限于"red"、"green"、"blue"、"alpha"中的一种。
+ * @param { string } props.class - 类型。
  * @param { number } props.minimum - 最小值。
  * @param { number } props.maximum - 最大值。
- * @param { number } props.value - 值。
  * @param { string } props.unit - 单位。
+ * @param { number } props.getValue - 值的getter。
  * @param { Function } props.setValue - 值的setter。
  * @returns { JSX } - 色带组件。
  */
 function Ribbon ( props ) {
 
-    const getValue = createMemo( _ => props.value );
-    const [ getActive, setActive ] = createSignal( false );
+    const getMemoValue = createMemo( _ => props.getValue() );
+    const [ getEnabled, setEnabled ] = createSignal( false );
 
     let dom;
     let width;
@@ -36,8 +33,8 @@ function Ribbon ( props ) {
 
         document.documentElement.style.setProperty(
             "cursor",
-            getActive() ? "ew-resize" : "",
-            getActive() ? "important" : "",
+            getEnabled() ? "ew-resize" : "",
+            getEnabled() ? "important" : "",
         );
 
     } );
@@ -63,9 +60,9 @@ function Ribbon ( props ) {
     } );
 
     return (
-        <div class={ `${ style.ribbon } ${ style[ props.name ] }` }>
-            <span class={ style.text }>{ getUpperCamelCaseName() }</span>
-            <span class={ style.value }>{ getValue() + props.unit }</span>
+        <div class={ `${ style.ribbon } ${ style[ props.class ] }` }>
+            <span class={ style.text }>{ props.name }</span>
+            <span class={ style.value }>{ getMemoValue() + props.unit }</span>
             <div class={ style.range }>
                 <div class={ style.overlay }></div>
                 <div class={ style.anchor } ref={ dom }>
@@ -80,31 +77,31 @@ function Ribbon ( props ) {
 
     function createStyle () {
 
-        return ( {
-            left: ( getValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%",
-            cursor: getActive() ? "ew-resize" : "grab",
-        } );
+        const left = ( getMemoValue() - props.minimum ) / ( props.maximum - props.minimum ) * 100 + "%";
+        const cursor = getEnabled() ? "ew-resize" : "grab";
+
+        return ( { left, cursor } );
 
     }
 
     function handlePointerUpEvent () {
 
-        setActive( false );
+        setEnabled( false );
 
     }
 
     function handlePointerDownEvent ( event ) {
 
-        setActive( true );
+        setEnabled( true );
 
-        base_value = getValue();
+        base_value = getMemoValue();
         base_position = event.screenX;
 
     }
 
     function handlePointerMoveEvent ( event ) {
 
-        if ( ! getActive() ) return;
+        if ( ! getEnabled() ) return;
 
         let next_value;
         let next_position = event.screenX;
@@ -118,12 +115,7 @@ function Ribbon ( props ) {
 
     }
 
-    function getUpperCamelCaseName () {
-
-        return props.name[ 0 ].toUpperCase().concat( ... props.name.slice( 1 ) );
-
-    }
-
 }
 
+/* -------------------------------------------------------------------------------------------- */
 export { Ribbon };
