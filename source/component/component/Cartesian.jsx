@@ -1,25 +1,22 @@
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 import style from "./cartesian.module.css";
 
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 
 /**
  * 色板组件构造器。
  * @param { Object } props - 参数字典。
- * @param { string[] } props.names - 名称数组，具体是指[horizontal_name, vertical_name]。
- * @param { number[] } props.values - 值数组，具体是指[horizontal_value, vertical_value]。
- * @param { Function[] } props.setters - setter数组，具体是指[setHorizontalValue, setVerticalValue]。
+ * @param { string[] } props.names - 名称数组。
+ * @param { number[] } props.getValues - 值数组的getter。
+ * @param { Function[] } props.setValues - 值数组的setter。
  * @returns { JSX } 色板组件。
  */
 function Cartesian ( props ) {
 
-    const [ getActive, setActive ] = createSignal( false );
-    const getValues = createMemo( _ => props.values, props.values, { equals: ( prev, next ) => {
+    const [ getEnabled, setEnabled ] = createSignal( false );
+    const initial_memo_values = props.getValues();
+    const getMemoValues = createMemo( _ => props.getValues(), initial_memo_values, { equals: ( prev, next ) => {
 
         for ( let i = 0; i < prev.length; i ++ ) {
 
@@ -35,8 +32,8 @@ function Cartesian ( props ) {
 
         document.documentElement.style.setProperty(
             "cursor",
-            getActive() ? "all-scroll" : "",
-            getActive() ? "important" : "",
+            getEnabled() ? "all-scroll" : "",
+            getEnabled() ? "important" : "",
         );
 
     } );
@@ -60,10 +57,10 @@ function Cartesian ( props ) {
     return (
         <div class={ style.cartesian }>
             <div class={ `${ style.axis } ${ style.x }` }>
-                <span>{ props.names[ 0 ][ 0 ].toUpperCase().concat( ... props.names[ 0 ].slice( 1 ) ) }</span>
+                <span>{ props.names[ 0 ] }</span>
             </div>
             <div class={ `${ style.axis } ${ style.y }` }>
-                <span>{ props.names[ 1 ][ 0 ].toUpperCase().concat( ... props.names[ 1 ].slice( 1 ) ) }</span>
+                <span>{ props.names[ 1 ] }</span>
             </div>
             <div class={ style.board }>
                 <div class={ `${ style.mixcolor } ${ style.lower }` }></div>
@@ -77,7 +74,7 @@ function Cartesian ( props ) {
 
         // TODO 计算top和left，我不想让这个计算过程与CSS的--border-width耦合在一起，我需要重构吗？
 
-        const cursor = getActive() ? "all-scroll" : "grab";
+        const cursor = getEnabled() ? "all-scroll" : "grab";
 
         return { cursor };
 
@@ -85,13 +82,13 @@ function Cartesian ( props ) {
 
     function handlePointerUpEvent ( event ) {
 
-        setActive( false );
+        setEnabled( false );
 
     }
 
     function handlePointerDownEvent ( event ) {
 
-        setActive( true );
+        setEnabled( true );
 
     }
 
@@ -99,7 +96,5 @@ function Cartesian ( props ) {
 
 }
 
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 export { Cartesian };
