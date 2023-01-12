@@ -1,22 +1,21 @@
-/**
- *
- */
-import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
-
+/* -------------------------------------------------------------------------------------------- */
 import style from "./wheel.module.css";
+
+/* -------------------------------------------------------------------------------------------- */
+import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 
 /**
  * 色轮组件构造器
  * @param { Object } props - 参数字典。
  * @param { string } props.name - 名称。
- * @param { string } props.value - 值。
+ * @param { string } props.getValue - 值的getter。
  * @param { Function } props.setValue - 值的setter。
  * @returns { JSX } - 色轮组件。
  */
 function Wheel ( props ) {
 
-    const getValue = createMemo( _ => props.value );
-    const [ getActive, setActive ] = createSignal( false );
+    const getMemoValue = createMemo( _ => props.getValue() );
+    const [ getEnabled, setEnabled ] = createSignal( false );
 
     let dom;
     let base_value, base_x, base_y;
@@ -25,8 +24,8 @@ function Wheel ( props ) {
 
         document.documentElement.style.setProperty(
             "cursor",
-            getActive() ? "all-scroll" : "",
-            getActive() ? "important" : "",
+            getEnabled() ? "all-scroll" : "",
+            getEnabled() ? "important" : "",
         );
 
     } );
@@ -53,8 +52,8 @@ function Wheel ( props ) {
                 <div class={ style.overlay }></div>
             </div>
             <div class={ style.info }>
-                <p class={ style.name }>{ props.name[ 0 ].toUpperCase().concat( props.name.slice( 1 ) ) }</p>
-                <p class={ style.value }>{ getValue() + "deg" }</p>
+                <p class={ style.name }>{ props.name }</p>
+                <p class={ style.value }>{ getMemoValue() + "deg" }</p>
             </div>
             <div
                 class={ style.anchor }
@@ -66,16 +65,16 @@ function Wheel ( props ) {
 
     function createStyle () {
 
-        const ring_width = "13px"; // 该值等于--ribbon-width和--border-width之和
+        const ring_width = "13px"; // 注意：该值等于--ribbon-width和--border-width之和
 
-        const degree = getValue();
+        const degree = getMemoValue();
         const radian = degree / 180 * Math.PI;
 
         const top = `calc( 50% - ${ Math.cos( radian ) } * calc( 50% - ${ ring_width } ) )`;
         const left = `calc( ${ Math.sin( radian ) } * calc( 50% - ${ ring_width } ) + 50% )`;
         const transform = `translate( -50%, -50% ) rotate( ${ degree }deg )`;
 
-        const cursor = getActive() ? "all-scroll" : "grab";
+        const cursor = getEnabled() ? "all-scroll" : "grab";
 
         return { top, left, transform, cursor };
 
@@ -83,22 +82,22 @@ function Wheel ( props ) {
 
     function handlePointerUpEvent ( event ) {
 
-        setActive( false );
+        setEnabled( false );
 
     }
 
     function handlePointerDownEvent ( event ) {
 
-        setActive( true );
+        setEnabled( true );
 
-        base_value = getValue();
+        base_value = getMemoValue();
         [ base_x, base_y ] = [ event.clientX, event.clientY ];
 
     }
 
     function handlePointerMoveEvent ( event ) {
 
-        if ( ! getActive() ) return;
+        if ( ! getEnabled() ) return;
 
         const rect = dom.getBoundingClientRect();
         const origin_position = [ ( rect.right + rect.left ) / 2, ( rect.top + rect.bottom ) / 2 ];
@@ -173,7 +172,5 @@ function calculateClockwiseAngle ( v_a, v_b ) {
 
 }
 
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 export { Wheel };
