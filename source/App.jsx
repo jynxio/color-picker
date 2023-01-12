@@ -1,27 +1,13 @@
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 import style from "./app.module.css";
 
-/**
- *
- */
-import { createSignal, onCleanup, onMount, useContext } from "solid-js";
-
-import { GlobalColorContext } from "./context/GlobalColorContext";
-
-import { createRgbString } from "./helper/colorFormatConvertor";
-
+import { createSignal, onCleanup, onMount } from "solid-js";
+import { rgbToString } from "./color/convertor";
+import { getGlobalRgb } from "./color/color";
 import { Palette } from "./component/Palette";
 
-// import { Output } from "./component/Output";
-
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 function App () {
-
-    const global_color = useContext( GlobalColorContext );
 
     const formats = [ "hex", "rgb", "hsl" ];
     const [ getFormat, setFormat ] = createSignal( formats[ 2 ] );
@@ -32,10 +18,9 @@ function App () {
     return (
         <div
             class={ style.container }
-            style={ { "background-color": createRgbString( global_color.getRgb() ) } }
+            style={ { "background-color": rgbToString( getGlobalRgb() ) } }
         >
             <Palette format={ getFormat() }/>
-            {/* <Output getMode={ getMode } setMode={ setMode }/> */}
         </div>
     );
 
@@ -52,7 +37,5 @@ function App () {
 
 }
 
-/**
- *
- */
+/* -------------------------------------------------------------------------------------------- */
 export { App };
