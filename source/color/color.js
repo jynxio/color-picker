@@ -17,10 +17,8 @@ const getGlobalHsl = _ => [ ... getGlobalColor().hsl ];
 const setGlobalHex = hex => {
 
     /*  */
-    let prev;
-
-    prev = getGlobalHex();
-    next = [ ... hex ];
+    const prev = getGlobalHex();
+    const next = [ ... hex ];
 
     /*  */
     for ( let i = 0; i < prev.length; i ++ ) {
@@ -37,10 +35,8 @@ const setGlobalHex = hex => {
 const setGlobalRgb = rgb => {
 
     /*  */
-    let prev;
-
-    prev = getGlobalRgb();
-    next = [ ... rgb ];
+    const prev = getGlobalRgb();
+    const next = [ ... rgb ];
 
     /*  */
     for ( let i = 0; i < prev.length; i ++ ) {
@@ -57,10 +53,8 @@ const setGlobalRgb = rgb => {
 const setGlobalHsl = hsl => {
 
     /*  */
-    let prev;
-
-    prev = getGlobalHsl();
-    next = [ ... hsl ];
+    const prev = getGlobalHsl();
+    const next = [ ... hsl ];
 
     /*  */
     for ( let i = 0; i < prev.length; i ++ ) {
