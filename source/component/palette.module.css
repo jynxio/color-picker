@@ -8,6 +8,7 @@
     color: var( --font-color );
     font-family: var( --font-family );
 
+    border: 1px solid #fff;
     border-radius: var( --border-radius );
 
     background-color: #000;
