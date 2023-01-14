@@ -9,8 +9,7 @@ import { Palette } from "./component/Palette";
 /* -------------------------------------------------------------------------------------------- */
 function App () {
 
-    const formats = [ "hex", "rgb", "hsl" ];
-    const [ getFormat, setFormat ] = createSignal( formats[ 2 ] );
+    const [ getFormat, setFormat ] = createSignal( "rgb" ); // "rgb" or "hsl"
 
     onMount( _ => globalThis.addEventListener( "keydown", handleKeyDownEvent ) );
     onCleanup( _ => globalThis.removeEventListener( "keydown", handleKeyDownEvent ) );
@@ -28,10 +27,7 @@ function App () {
 
         if ( event.key.toLowerCase() !== "shift" ) return;
 
-        const next_index = ( formats.indexOf( getFormat() ) + 1 ) % 3;
-        const next_format = formats[ next_index ];
-
-        setFormat( next_format );
+        setFormat( getFormat() === "rgb" ? "hsl" : "rgb" );
 
     }
 
