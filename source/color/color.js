@@ -4,11 +4,11 @@ import { hexToRgb, hexToHsl, rgbToHex, rgbToHsl, hslToHex, hslToRgb } from "./co
 import { equal } from "../math/equal";
 
 /* -------------------------------------------------------------------------------------------- */
-const [ getGlobalColor, setGlobalColor ] = createSignal( {
-    hex: [ 0, 0, 0, 255 ],
-    rgb: hexToRgb( [ 0, 0, 0, 255 ] ),
-    hsl: hexToHsl( [ 0, 0, 0, 255 ] ),
-} );
+const initial_hex = [ 36, 79, 245, 255 ];
+const initial_rgb = hexToRgb( initial_hex );
+const initial_hsl = hexToHsl( initial_hex );
+
+const [ getGlobalColor, setGlobalColor ] = createSignal( { hex: initial_hex, rgb: initial_rgb, hsl: initial_hsl } );
 
 const getGlobalHex = _ => [ ... getGlobalColor().hex ];
 const getGlobalRgb = _ => [ ... getGlobalColor().rgb ];
