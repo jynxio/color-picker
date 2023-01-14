@@ -17,9 +17,6 @@ function Palette ( props ) {
 
     return (
         <Switch>
-            <Match when={ props.format === "hex" }>
-                <Hex/>
-            </Match>
             <Match when={ props.format === "rgb" }>
                 <Rgb/>
             </Match>
@@ -27,29 +24,6 @@ function Palette ( props ) {
                 <Hsl/>
             </Match>
         </Switch>
-    );
-
-}
-
-function Hex () {
-
-    const getR = _ => getGlobalHex()[ 0 ];
-    const getG = _ => getGlobalHex()[ 1 ];
-    const getB = _ => getGlobalHex()[ 2 ];
-    const getA = _ => getGlobalHex()[ 3 ];
-
-    const setR = r => setGlobalHex( [ r, getG(), getB(), getA() ] );
-    const setG = g => setGlobalHex( [ getR(), g, getB(), getA() ] );
-    const setB = b => setGlobalHex( [ getR(), getG(), b, getA() ] );
-    const setA = a => setGlobalHex( [ getR(), getG(), getB(), a ] );
-
-    return (
-        <div class={ style.palette }>
-            <Ribbon class={ "red" } name={ "Red" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getR } setValue={ setR }/>
-            <Ribbon class={ "green" } name={ "Green" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getG } setValue={ setG }/>
-            <Ribbon class={ "blue" } name={ "Blue" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getB } setValue={ setB }/>
-            <Ribbon class={ "alpha" } name={ "Alpha" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getA } setValue={ setA }/>
-        </div>
     );
 
 }
@@ -85,8 +59,6 @@ function Hsl () {
     const getA = _ => Math.round( getGlobalHsl()[ 3 ] * 100 );
 
     const setH = h => setGlobalHsl( [ h, getS() / 100, getL() / 100, getA() / 100 ] );
-    const setS = s => setGlobalHsl( [ getH(), s / 100, getL() / 100, getA() / 100 ] );
-    const setL = l => setGlobalHsl( [ getH(), getS() / 100, l / 100, getA() / 100 ] );
     const setA = a => setGlobalHsl( [ getH(), getS() / 100, getL() / 100, a / 100 ] );
 
     const getSL = _ => [ getS(), getL() ];
