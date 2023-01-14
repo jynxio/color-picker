@@ -4,11 +4,8 @@
     grid-template-rows: auto 2rem;
     grid-template-columns: 1fr 1fr;
 
-    margin-block-start: 1rem;
-}
-
-.ribbon:first-child {
-    margin-block-start: 0;
+    inline-size: 100%;
+    block-size: 100%;
 }
 
 /* -------------------------------------------------------------------------------------------- */

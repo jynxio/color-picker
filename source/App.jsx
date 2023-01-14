@@ -5,6 +5,7 @@ import { createSignal, onCleanup, onMount } from "solid-js";
 import { rgbToString } from "./color/convertor";
 import { getGlobalRgb } from "./color/color";
 import { Palette } from "./component/Palette";
+import { Output } from "./component/Output";
 
 /* -------------------------------------------------------------------------------------------- */
 function App () {
@@ -20,6 +21,7 @@ function App () {
             style={ { "background-color": rgbToString( getGlobalRgb() ) } }
         >
             <Palette format={ getFormat() }/>
+            <Output/>
         </div>
     );
 

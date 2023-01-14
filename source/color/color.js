@@ -4,7 +4,7 @@ import { hexToRgb, hexToHsl, rgbToHex, rgbToHsl, hslToHex, hslToRgb } from "./co
 import { equal } from "../math/equal";
 
 /* -------------------------------------------------------------------------------------------- */
-const initial_hex = [ 36, 79, 245, 255 ];
+const initial_hex = [ 4, 10, 103, 255 ];
 const initial_rgb = hexToRgb( initial_hex );
 const initial_hsl = hexToHsl( initial_hex );
 

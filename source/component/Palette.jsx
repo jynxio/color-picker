@@ -5,7 +5,7 @@ import { Switch, Match } from "solid-js";
 import { Ribbon } from "./component/Ribbon";
 import { Wheel } from "./component/Wheel";
 import { Cartesian } from "./component/Cartesian";
-import { getGlobalHex, getGlobalRgb, getGlobalHsl, setGlobalHex, setGlobalRgb, setGlobalHsl } from "../color/color";
+import { getGlobalRgb, getGlobalHsl, setGlobalRgb, setGlobalHsl } from "../color/color";
 
 /**
  * Palette组件构造器。
@@ -17,12 +17,8 @@ function Palette ( props ) {
 
     return (
         <Switch>
-            <Match when={ props.format === "rgb" }>
-                <Rgb/>
-            </Match>
-            <Match when={ props.format === "hsl" }>
-                <Hsl/>
-            </Match>
+            <Match when={ props.format === "rgb" }><Rgb/></Match>
+            <Match when={ props.format === "hsl" }><Hsl/></Match>
         </Switch>
     );
 
@@ -41,11 +37,19 @@ function Rgb () {
     const setA = a => setGlobalRgb( [ getR(), getG(), getB(), a / 100 ] );
 
     return (
-        <div class={ style.palette }>
-            <Ribbon class={ "red" } name={ "Red" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getR } setValue={ setR }/>
-            <Ribbon class={ "green" } name={ "Green" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getG } setValue={ setG }/>
-            <Ribbon class={ "blue" } name={ "Blue" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getB } setValue={ setB }/>
-            <Ribbon class={ "alpha" } name={ "Alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } getValue={ getA } setValue={ setA }/>
+        <div class={ `${ style.palette } ${ style.rgb }` }>
+            <div class={ style.ribbon }>
+                <Ribbon class={ "red" } name={ "Red" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getR } setValue={ setR }/>
+            </div>
+            <div class={ style.ribbon }>
+                <Ribbon class={ "green" } name={ "Green" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getG } setValue={ setG }/>
+            </div>
+            <div class={ style.ribbon }>
+                <Ribbon class={ "blue" } name={ "Blue" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getB } setValue={ setB }/>
+            </div>
+            <div class={ style.ribbon }>
+                <Ribbon class={ "alpha" } name={ "Alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } getValue={ getA } setValue={ setA }/>
+            </div>
         </div>
     );
 
@@ -65,10 +69,16 @@ function Hsl () {
     const setSL = sl => setGlobalHsl( [ getH(), sl[ 0 ] / 100, sl[ 1 ] / 100, getA() / 100 ] );
 
     return (
-        <div class={ style.palette }>
-            <Cartesian names={ [ "saturation", "lightness" ] } getValues={ getSL } setValues={ setSL }/>
-            <Wheel name={ "Hue" } getValue={ getH } setValue={ setH }/>
-            <Ribbon class={ "alpha" } name={ "Alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } getValue={ getA } setValue={ setA }/>
+        <div class={ `${ style.palette } ${ style.hsl }` }>
+            <div class={ style.wheel }>
+                <Wheel name={ "Hue" } getValue={ getH } setValue={ setH }/>
+            </div>
+            <div class={ style.cartesian }>
+                <Cartesian names={ [ "Saturation", "Lightness" ] } getValues={ getSL } setValues={ setSL }/>
+            </div>
+            <div class={ style.ribbon }>
+                <Ribbon class={ "alpha" } name={ "Alpha" } minimum={ 0 } maximum={ 100 } unit={ "%" } getValue={ getA } setValue={ setA }/>
+            </div>
         </div>
     );
 

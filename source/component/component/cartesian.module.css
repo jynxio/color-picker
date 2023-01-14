@@ -4,8 +4,8 @@
     grid-template-rows: 1.5rem auto 1.5rem;
     grid-template-columns: 1.5rem auto 1.5rem;
 
-    inline-size: 16rem;
-    block-size: 16rem;
+    inline-size: 100%;
+    block-size: 100%;
 
     color: var( --font-color );
     font-family: ( --font-family );
@@ -59,7 +59,7 @@
 }
 
 .cartesian > .axis > span {
-    margin-inline: 1rem;
+    margin-inline: 0.25rem;
 }
 
 /* -------------------------------------------------------------------------------------------- */

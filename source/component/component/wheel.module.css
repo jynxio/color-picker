@@ -2,8 +2,8 @@
 .wheel {
     position: relative;
 
-    inline-size: 16rem;
-    block-size: 16rem;
+    inline-size: 100%;
+    block-size: 100%;
 
     color: var( --font-color );
 }

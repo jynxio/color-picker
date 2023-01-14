@@ -1,15 +1,61 @@
+/* -------------------------------------------------------------------------------------------- */
 .palette {
-    display: flex;
-    flex-direction: column;
-
     inline-size: 100%;
-    padding: 1rem;
-
-    color: var( --font-color );
-    font-family: var( --font-family );
+    max-inline-size: 30rem;
+    padding: 0.75rem;
 
     border: 1px solid #fff;
     border-radius: var( --border-radius );
 
+    color: var( --font-color );
+    font-family: var( --font-family );
+
     background-color: #000;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.palette.rgb {
+    display: flex;
+    flex-direction: column;
+}
+
+.palette.rgb > .ribbon {
+    margin-block-start: 0.5rem;
+}
+
+.palette.rgb > .ribbon:first-child {
+    margin-block-start: 0;
+}
+
+/* -------------------------------------------------------------------------------------------- */
+.palette.hsl {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+
+    justify-items: stretch;
+    align-items: center;
+}
+
+.palette.hsl > .wheel {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+
+    margin-inline-end: 0.25rem;
+    aspect-ratio: 1 / 1;
+}
+
+.palette.hsl > .cartesian {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+
+    margin-inline-start: 0.25rem;
+    aspect-ratio: 1 / 1;
+}
+
+.palette.hsl > .ribbon {
+    grid-row: 2 / 3;
+    grid-column: 1 / 3;
+
+    margin-block-start: 0.5rem;
 }
