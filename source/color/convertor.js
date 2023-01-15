@@ -3,6 +3,8 @@
 // 所以rgb、hsl、hex参数是拥有4个元素的数组，而不是3个元素的数组。
 // =========================================================================
 
+
+/* -------------------------------------------------------------------------------------------- */
 /**
  * hex转rgb。
  * @param { number[] } hex - [red, green, blue, alpha]，其中red、green、blue、alpha是均属于[0, 255]的整数。
@@ -10,7 +12,7 @@
  * @example
  * f( [ 255, 255, 255, 255 ] ); // return [ 255, 255, 255, 1 ]
  */
-export function hexToRgb ( [ r, g, b, a ] ) {
+function hexToRgb ( [ r, g, b, a ] ) {
 
     return [ r, g, b, a / 255 ];
 
@@ -23,7 +25,7 @@ export function hexToRgb ( [ r, g, b, a ] ) {
  * @example
  * f( [ 255, 255, 255, 255 ] ); // return [ 0, 0, 1, 1 ]
  */
-export function hexToHsl ( [ r, g, b, a ] ) {
+function hexToHsl ( [ r, g, b, a ] ) {
 
     const rgb = hexToRgb( [ r, g, b, a ] );
     const hsl = rgbToHsl( rgb );
@@ -39,7 +41,7 @@ export function hexToHsl ( [ r, g, b, a ] ) {
  * @example
  * f( [ 255, 255, 255, 1 ] ); // return [ 255, 255, 255, 255 ]
  */
-export function rgbToHex ( [ r, g, b, a ] ) {
+function rgbToHex ( [ r, g, b, a ] ) {
 
     a = Math.round( a * 255 );
     a = Math.max( a, 0 );
@@ -58,7 +60,7 @@ export function rgbToHex ( [ r, g, b, a ] ) {
  * @example
  * f( [ 45, 23, 11, 1 ] ); // return [ 21.17647058823529, 0.6071428571428573, 0.10980392156862745, 1 ]
  */
-export function rgbToHsl ( [ r, g, b, a ] ) {
+function rgbToHsl ( [ r, g, b, a ] ) {
 
     r /= 255;
     g /= 255;
@@ -90,7 +92,7 @@ export function rgbToHsl ( [ r, g, b, a ] ) {
  * @example
  * f( [ 13, 1, 0.11, 1 ] ); // return [ 56, 12, 0, 255 ]
  */
-export function hslToHex ( [ h, s, l, a ] ) {
+function hslToHex ( [ h, s, l, a ] ) {
 
     const rgb = hslToRgb( [ h, s, l, a ] );
 
@@ -122,7 +124,7 @@ export function hslToHex ( [ h, s, l, a ] ) {
  * @example
  * f( [ 13, 1, 0.11, 1 ] ); // return [ 56.1, 12.155000000000006, 0, 1 ]
  */
-export function hslToRgb ( [ h, s, l, a ] ) {
+function hslToRgb ( [ h, s, l, a ] ) {
 
     const k = n => ( n + h / 30 ) % 12;
     const t = s * Math.min( l, 1 - l );
@@ -132,50 +134,5 @@ export function hslToRgb ( [ h, s, l, a ] ) {
 
 }
 
-/**
- * hex转字符串（指符合CSS的#hex字符串）。
- * @param { number[] } hex - [red, green, blue, alpha]，其中red、green、blue、alpha是均属于[0, 255]的整数。
- * @returns { string } - CSS的#hex的入参字符串。
- * @example
- * f( [ 255, 255, 255, 255 ] ); // return "#ffffffff"
- */
-export function hexToString ( hex ) {
-
-    let [ r, g, b, a ] = hex;
-
-    r = ( r <= 0xf ? "0" : "" ) + r.toString( 16 );
-    g = ( g <= 0xf ? "0" : "" ) + g.toString( 16 );
-    b = ( b <= 0xf ? "0" : "" ) + b.toString( 16 );
-    a = ( a <= 0xf ? "0" : "" ) + a.toString( 16 );
-
-    return "#" + r + g + b + a;
-
-}
-
-/**
- * rgb转字符串（指符合CSS的rgb()字符串）。
- * @param { number } rgb - [red, green, blue, alpha]，其中red、green、blue是均属于[0, 255]的浮点数，alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
- * @returns { string } - CSS的rgb()的如惨字符串。
- * @example
- * f( [ 255, 255, 255, 1 ] ); // return "rgb( 255 255 255 / 1 )"
- */
-export function rgbToString ( rgb ) {
-
-    const [ r, g, b, a ] = rgb;
-
-    return `rgb( ${ r } ${ g } ${ b } / ${ a } )`;
-
-}
-
-/**
- * hsl转字符串（指符合CSS的hsl()字符串）。
- * @param { number } hsl - [hue, saturation, lightness, alpha]，其中hue是属于[0, 360]的浮点数，saturation是属于[0, 1]的浮点数（代表[0%, 100%]），lightness是属于[0, 1]的浮点数（代表[0%, 100%]），alpha是属于[0, 1]的浮点数（代表[0%, 100%]）。
- * @returns { string } - CSS的hsl()的入参字符串。
- */
-export function hslToString ( hsl ) {
-
-    const [ h, s, l, a ] = hsl;
-
-    return `hsl( ${ h }deg ${ s * 100 }% ${ l * 100 }% / ${ a } )`;
-
-}
+/* -------------------------------------------------------------------------------------------- */
+export { hexToRgb, hexToHsl, rgbToHex, rgbToHsl, hslToHex, hslToRgb };

@@ -10,7 +10,7 @@ import { getGlobalRgb, getGlobalHsl, setGlobalRgb, setGlobalHsl } from "../color
 /**
  * Palette组件构造器。
  * @param { Object } props - 参数字典。
- * @param { string } props.format - 颜色格式，仅限于"hex"、"rgb"、"hsl"中的一种。
+ * @param { string } props.format - 颜色格式，仅限于"rgb"或"hsl"。
  * @returns { JSX } - Palette组件。
  */
 function Palette ( props ) {

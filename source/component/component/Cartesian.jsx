@@ -83,12 +83,13 @@ function Cartesian ( props ) {
                 <div class={ `${ style.mixcolor } ${ style.upper }` }></div>
                 <span class={ style.anchor } style={ createStyle() } onPointerDown={ handlePointerDownEvent }></span>
             </div>
+
         </div>
     );
 
     function createStyle () {
 
-        const top = getMemoValues()[ 1 ] + "%";
+        const top = 100 - getMemoValues()[ 1 ] + "%";
         const left = getMemoValues()[ 0 ] + "%";
         const cursor = getEnabled() ? "all-scroll" : "grab";
 
@@ -123,7 +124,7 @@ function Cartesian ( props ) {
         next_values[ 0 ] = Math.max( next_values[ 0 ], 0 );
         next_values[ 0 ] = Math.round( next_values[ 0 ] );
 
-        next_values[ 1 ] = ( next_positions[ 1 ] - base_positions[ 1 ] ) / size * 100 + base_values[ 1 ];
+        next_values[ 1 ] = base_values[ 1 ] - ( next_positions[ 1 ] - base_positions[ 1 ] ) / size * 100;
         next_values[ 1 ] = Math.min( next_values[ 1 ], 100 );
         next_values[ 1 ] = Math.max( next_values[ 1 ], 0 );
         next_values[ 1 ] = Math.round( next_values[ 1 ] );

@@ -1,26 +1,24 @@
 /* -------------------------------------------------------------------------------------------- */
 .palette {
+    aspect-ratio: 1.5 / 1;
     inline-size: 100%;
     max-inline-size: 30rem;
     padding: 0.75rem;
 
-    border: 1px solid #fff;
+    border: 1px dashed #fff;
     border-radius: var( --border-radius );
-
-    color: var( --font-color );
-    font-family: var( --font-family );
-
     background-color: #000;
 }
 
 /* -------------------------------------------------------------------------------------------- */
 .palette.rgb {
     display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 
 .palette.rgb > .ribbon {
-    margin-block-start: 0.5rem;
+    margin-block-start: 0.75rem;
 }
 
 .palette.rgb > .ribbon:first-child {

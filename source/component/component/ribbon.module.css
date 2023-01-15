@@ -11,18 +11,16 @@
 /* -------------------------------------------------------------------------------------------- */
 .ribbon > .text {
     justify-self: start;
-    align-self: center;
+    align-self: end;
 
     line-height: 1.35;
-    font-size: 1rem;
 }
 
 .ribbon > .value {
     justify-self: end;
-    align-self: center;
+    align-self: end;
 
     line-height: 1.35;
-    font-size: 1rem;
 }
 
 .ribbon > .range {
