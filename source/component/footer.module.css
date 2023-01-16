@@ -1,0 +1,32 @@
+.footer {
+    position: fixed;
+    left: 50%;
+    bottom: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: translateX( -50% );
+}
+
+.footer > address {
+    transition: color 2s cubic-bezier(0.17, 0.67, 0.36, 1.04) 0s;
+}
+
+.footer > address > a {
+    color: inherit;
+    text-decoration: underline solid 1px;
+}
+
+.footer > hr {
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+
+    inline-size: 1px;
+    block-size: 1rem;
+    margin-inline: 0.5rem;
+
+    transition: background-color 2s cubic-bezier(0.17, 0.67, 0.36, 1.04) 0s;
+}
