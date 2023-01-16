@@ -5,12 +5,13 @@ import { createSignal, onCleanup, onMount } from "solid-js";
 import { getGlobalRgb } from "./color/color";
 import { Palette } from "./component/Palette";
 import { Output } from "./component/Output";
+import { Footer } from "./component/Footer";
 
 /* -------------------------------------------------------------------------------------------- */
 function App () {
 
-    const [ getOutputFormat, setOutputFormat ] = createSignal( "rgb" );   // "rgb" or "hex" or "hsl"
-    const [ getPaletteFormat, setPaletteFormat ] = createSignal( "rgb" ); // "rgb" or "hsl"
+    const [ getOutputFormat, setOutputFormat ] = createSignal( "hsl" );   // "rgb" or "hex" or "hsl"
+    const [ getPaletteFormat, setPaletteFormat ] = createSignal( "hsl" ); // "rgb" or "hsl"
 
     onMount( _ => globalThis.addEventListener( "keydown", handleKeyDownEvent ) );
     onCleanup( _ => globalThis.removeEventListener( "keydown", handleKeyDownEvent ) );
@@ -27,6 +28,7 @@ function App () {
                 toNextOutputFormat={ toNextOutputFormat }
                 toNextPaletteFormat={ toNextPaletteFormat }
             />
+            <Footer/>
         </div>
     );
 
