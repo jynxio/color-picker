@@ -16,8 +16,7 @@ import { equal } from "../../math/equal";
 function Cartesian ( props ) {
 
     const [ getEnabled, setEnabled ] = createSignal( false );
-    const initial_memo_values = props.getValues();
-    const getMemoValues = createMemo( _ => props.getValues(), initial_memo_values, { equals: ( prev, next ) => {
+    const getMemoValues = createMemo( _ => props.getValues(), undefined, { equals: ( prev, next ) => {
 
         if ( ! equal( prev[ 0 ], next[ 0 ] ) ) return false;
         if ( ! equal( prev[ 1 ], next[ 1 ] ) ) return false;
