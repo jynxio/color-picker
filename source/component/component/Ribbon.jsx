@@ -19,6 +19,7 @@ import { onMount, onCleanup, createMemo, createSignal, createEffect } from "soli
 function Ribbon ( props ) {
 
     const getMemoValue = createMemo( _ => props.getValue() );
+    const [ getDriverType, setDriverType ] = createSignal( "none" ); // "none" or "sliding" or "rolling"
     const [ getEnabled, setEnabled ] = createSignal( false );
 
     let dom;
