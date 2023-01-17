@@ -45,7 +45,7 @@ export default defineConfig( ( {
             base: "/",
             publicDir: "public",
             build: {
-                outDir: "build",
+                outDir: "docs",
                 assetsInlineLimit: 4096,     // 体积小于该值的资源将被转译为base64数据
                 chunkSizeWarningLimit: 1000, // chunk体积报警的触发阈值
             },
