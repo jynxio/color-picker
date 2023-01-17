@@ -42,7 +42,7 @@ export default defineConfig( ( {
 
         return {
             plugins: [ solid() ],
-            base: "/",
+            base: "./",
             publicDir: "public",
             build: {
                 outDir: "docs",
