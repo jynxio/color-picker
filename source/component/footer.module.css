@@ -10,7 +10,7 @@
 }
 
 .footer > address {
-    transition: color 2s cubic-bezier(0.17, 0.67, 0.36, 1.04) 0s;
+    transition: color 2s cubic-bezier( 0.17, 0.67, 0.36, 1.04 ) 0s;
 }
 
 .footer > address > a {

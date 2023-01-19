@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------------------------- */
 import style from "./palette.module.css";
 
-import { Switch, Match } from "solid-js";
+import { createMemo, Switch, Match } from "solid-js";
 import { Ribbon } from "./component/Ribbon";
 import { Wheel } from "./component/Wheel";
 import { Cartesian } from "./component/Cartesian";
@@ -15,16 +15,27 @@ import { getGlobalRgb, getGlobalHsl, setGlobalRgb, setGlobalHsl } from "../color
  */
 function Palette ( props ) {
 
+    const getBorderColor = createMemo( _ => {
+
+        const [ , , l, a ] = getGlobalHsl();
+
+        if ( a < 0.42 ) return "#000";
+        if ( l < 0.63 ) return "#fff";
+
+        return "#000";
+
+    } );
+
     return (
         <Switch>
-            <Match when={ props.format === "rgb" }><Rgb/></Match>
-            <Match when={ props.format === "hsl" }><Hsl/></Match>
+            <Match when={ props.format === "rgb" }><Rgb style={ { "border-color": getBorderColor() } }/></Match>
+            <Match when={ props.format === "hsl" }><Hsl style={ { "border-color": getBorderColor() } }/></Match>
         </Switch>
     );
 
 }
 
-function Rgb () {
+function Rgb ( props ) {
 
     const getR = _ => Math.round( getGlobalRgb()[ 0 ] );
     const getG = _ => Math.round( getGlobalRgb()[ 1 ] );
@@ -37,7 +48,7 @@ function Rgb () {
     const setA = a => setGlobalRgb( [ getR(), getG(), getB(), a / 100 ] );
 
     return (
-        <div class={ `${ style.palette } ${ style.rgb }` }>
+        <div class={ `${ style.palette } ${ style.rgb }` } style={ props.style }>
             <div class={ style.ribbon }>
                 <Ribbon class={ "red" } name={ "Red" } minimum={ 0 } maximum={ 255 } unit={ "" } getValue={ getR } setValue={ setR }/>
             </div>
@@ -55,7 +66,7 @@ function Rgb () {
 
 }
 
-function Hsl () {
+function Hsl ( props ) {
 
     const getH = _ => Math.round( getGlobalHsl()[ 0 ] );
     const getS = _ => Math.round( getGlobalHsl()[ 1 ] * 100 );
@@ -69,7 +80,7 @@ function Hsl () {
     const setSL = sl => setGlobalHsl( [ getH(), sl[ 0 ] / 100, sl[ 1 ] / 100, getA() / 100 ] );
 
     return (
-        <div class={ `${ style.palette } ${ style.hsl }` }>
+        <div class={ `${ style.palette } ${ style.hsl }` } style={ props.style }>
             <div class={ style.wheel }>
                 <Wheel name={ "Hue" } getValue={ getH } setValue={ setH }/>
             </div>

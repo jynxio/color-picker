@@ -2,13 +2,14 @@
 import { createSignal } from "solid-js";
 import { hexToRgb, hexToHsl, rgbToHex, rgbToHsl, hslToHex, hslToRgb } from "./convertor";
 import { equal } from "../math/equal";
+import { createStorage } from "../storage/createStorage";
 
 /* -------------------------------------------------------------------------------------------- */
-const initial_hex = [ 4, 10, 103, 255 ];
-const initial_rgb = hexToRgb( initial_hex );
-const initial_hsl = hexToHsl( initial_hex );
-
-const [ getGlobalColor, setGlobalColor ] = createSignal( { hex: initial_hex, rgb: initial_rgb, hsl: initial_hsl } );
+const [ getGlobalColor, setGlobalColor ] = createStorage( "color", {
+    hex: [ 4, 10, 103, 255 ],
+    rgb: hexToRgb( [ 4, 10, 103, 255 ] ),
+    hsl: hexToHsl( [ 4, 10, 103, 255 ] ),
+} );
 
 const getGlobalHex = _ => [ ... getGlobalColor().hex ];
 const getGlobalRgb = _ => [ ... getGlobalColor().rgb ];

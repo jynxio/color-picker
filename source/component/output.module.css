@@ -21,8 +21,11 @@
 
     padding: 0.75rem;
     margin-inline-end: 0.75rem;
+    border: 1px solid transparent;
 
     text-align: center;
+
+    transition: border-color 2s cubic-bezier( 0.17, 0.67, 0.36, 1.04 ) 0s;
 }
 
 /* -------------------------------------------------------------------------------------------- */
@@ -32,6 +35,9 @@
 
     block-size: 100%;
     padding-inline: 0.75rem;
+    border: 1px solid transparent;
+
+    transition: border-color 2s cubic-bezier( 0.17, 0.67, 0.36, 1.04 ) 0s;
 }
 
 .output > .controller > button {
@@ -47,7 +53,14 @@
     border: 1px solid #fff;
     border-radius: var( --border-radius );
 
+    color: #fff;
     cursor: pointer;
+    background-color: #000;
+}
+
+.output > .controller > button:active {
+    color: #000;
+    background-color: #fff;
 }
 
 .output > .controller > button:last-child {
@@ -58,6 +71,8 @@
     inline-size: 1rem;
     block-size: 1rem;
 
-    color: var( --font-color );
+    color: inherit;
     vertical-align: bottom;
+    background-color: inherit;
+    animation: inherit;
 }

@@ -5,8 +5,11 @@
     max-inline-size: 30rem;
     padding: 0.75rem;
 
+    border: 1px solid transparent;
     border-radius: var( --border-radius );
     background-color:#000;
+
+    transition: border-color 2s cubic-bezier( 0.17, 0.67, 0.36, 1.04 ) 0s;
 }
 
 /* -------------------------------------------------------------------------------------------- */
