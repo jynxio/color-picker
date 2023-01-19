@@ -1,7 +1,6 @@
 /* -------------------------------------------------------------------------------------------- */
 import style from "./app.module.css";
 
-import {  onCleanup, onMount } from "solid-js";
 import { createStorage } from "./storage/createStorage";
 import { getGlobalRgb } from "./color/color";
 import { rgbToString } from "./color/convertor";

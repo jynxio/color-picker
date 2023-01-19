@@ -18,12 +18,31 @@ import { rgbToString, hexToString, hslToString } from "../color/convertor";
  */
 function Output ( props ) {
 
-    let button_copy;
-    let button_output;
-    let button_palette;
+    // BUG solid.js can't dispatch event!
+    // BUG solid.js can't dispatch event!
+    // BUG solid.js can't dispatch event!
 
-    onMount( _ => globalThis.addEventListener( "keydown", testKeydown ) );
-    onCleanup( _ => globalThis.removeEventListener( "keydown", testKeydown ) );
+    // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
+    // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
+    // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
+
+    onMount( _ => {
+
+        copy_button.addEventListener( "click", _ => console.log( "%cYou click the button.", "color: pink" ) );
+
+        globalThis.addEventListener( "click", _ => {
+
+            copy_button.dispatchEvent( new MouseEvent( "click" ) );
+
+            console.log( "%cYou click the globalThis.", "color: teal" );
+
+        } );
+
+    } );
+
+    let copy_button;
+    let output_button;
+    let palette_button;
 
     const getBorderColor = createMemo( _ => {
 
@@ -40,9 +59,9 @@ function Output ( props ) {
         <div class={ style.output }>
             <pre class={ style.value } style={ { "border-color": getBorderColor() } }>{ createColorString() }</pre>
             <div class={ style.controller } style={ { "border-color": getBorderColor() } }>
-                <button ref={ button_copy } onPointerDown={ testPointerdown }><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
-                <button ref={ button_output } onPointerDown={ handleSwitchOutputFormatEvent }><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"></path><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"></path><path d="M14.5 17.5 4.5 15"></path></svg></button>
-                <button ref={ button_palette } onPointerDown={ handleSwitchPaletteFormatEvent }><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg></button>
+                <button ref={ copy_button } onPointerDown={ handleCopyEvent }><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                <button ref={ output_button } onPointerDown={ handleSwitchOutputFormatEvent }><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"></path><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"></path><path d="M14.5 17.5 4.5 15"></path></svg></button>
+                <button ref={ palette_button } onPointerDown={ handleSwitchPaletteFormatEvent }><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg></button>
             </div>
         </div>
     );
@@ -85,33 +104,13 @@ function Output ( props ) {
 
         const key = event.key.toLowerCase();
 
-        if ( key === " " ) return button_copy.dispatchEvent( new PointerEvent( "pointerdown" ) );
+        if ( key === " " ) return copy_button.dispatchEvent( new PointerEvent( "pointerdown" ) );
 
-        if ( key === "s" ) return button_output.dispatchEvent( new PointerEvent( "pointerdown" ) );
+        if ( key === "s" ) return output_button.dispatchEvent( new PointerEvent( "pointerdown" ) );
 
-        if ( key === "w" ) return button_palette.dispatchEvent( new PointerEvent( "pointerdown" ) );
-
-    }
-
-    function testPointerdown () {
-
-        console.log( "You fire the pointerdown event." );
+        if ( key === "w" ) return palette_button.dispatchEvent( new PointerEvent( "pointerdown" ) );
 
     }
-
-    function testKeydown ( event ) {
-
-        if ( event.key.toLowerCase() !== " " ) return;
-
-        button_copy.dispatchEvent( new PointerEvent( "pointerdown" ) );
-
-        console.log( "You fire the keydown event." );
-
-    }
-
-    // BUG
-    // BUG SolidJS 不能 dispatch event！！！！
-    // BUG
 
 }
 
