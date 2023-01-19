@@ -26,6 +26,10 @@ function Output ( props ) {
     // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
     // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
 
+    // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
+    // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
+    // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
+
     onMount( _ => {
 
         copy_button.addEventListener( "click", _ => console.log( "%cYou click the button.", "color: pink" ) );
