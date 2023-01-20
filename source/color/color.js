@@ -1,5 +1,4 @@
 /* -------------------------------------------------------------------------------------------- */
-import { createSignal } from "solid-js";
 import { hexToRgb, hexToHsl, rgbToHex, rgbToHsl, hslToHex, hslToRgb } from "./convertor";
 import { equal } from "../math/equal";
 import { createStorage } from "../storage/createStorage";

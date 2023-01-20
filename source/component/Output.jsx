@@ -30,23 +30,12 @@ function Output ( props ) {
     // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
     // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
 
-    onMount( _ => {
-
-        copy_button.addEventListener( "click", _ => console.log( "%cYou click the button.", "color: pink" ) );
-
-        globalThis.addEventListener( "click", _ => {
-
-            copy_button.dispatchEvent( new MouseEvent( "click" ) );
-
-            console.log( "%cYou click the globalThis.", "color: teal" );
-
-        } );
-
-    } );
-
     let copy_button;
     let output_button;
     let palette_button;
+
+    onMount( _ => globalThis.addEventListener( "keydown", handleKeyDownEvent ) );
+    onCleanup( _ => globalThis.removeEventListener( "keydown", handleKeyDownEvent ) );
 
     const getBorderColor = createMemo( _ => {
 
@@ -76,9 +65,10 @@ function Output ( props ) {
         const string =
             format === "rgb" ? "rgb(" + rgbToString( getGlobalRgb() ) + ")" :
             format === "hex" ? "#" + hexToString( getGlobalHex() ) :
-            format === "hsl" ? "hsl(" + hslToString( getGlobalHsl() ) + ")" : undefined;
+            format === "hsl" ? "hsl(" + hslToString( getGlobalHsl() ) + ")" :
+            new Error( "Error: Unexpected situation." );
 
-        if ( ! string ) throw new Error( "Error: Unexpected situation." );
+        if ( string instanceof Error ) throw string;
 
         return string;
 
@@ -86,7 +76,14 @@ function Output ( props ) {
 
     function handleCopyEvent () {
 
-        const text = createColorString();
+        const format = props.outputFormat; // "rgb" or "hex" or "hsl"
+        const text =
+            format === "rgb" ? rgbToString( getGlobalRgb() ) :
+            format === "hex" ? hexToString( getGlobalHex() ) :
+            format === "hsl" ? hslToString( getGlobalHsl() ) :
+            new Error( "Error: Unexpected situation." );
+
+        if ( text instanceof Error ) throw text;
 
         navigator.clipboard.writeText( text );
 
@@ -108,11 +105,9 @@ function Output ( props ) {
 
         const key = event.key.toLowerCase();
 
-        if ( key === " " ) return copy_button.dispatchEvent( new PointerEvent( "pointerdown" ) );
-
-        if ( key === "s" ) return output_button.dispatchEvent( new PointerEvent( "pointerdown" ) );
-
-        if ( key === "w" ) return palette_button.dispatchEvent( new PointerEvent( "pointerdown" ) );
+        if ( key === "c" ) return copy_button.dispatchEvent( new PointerEvent( "pointerdown", { bubbles: true } ) );
+        if ( key === "s" ) return output_button.dispatchEvent( new PointerEvent( "pointerdown", { bubbles: true } ) );
+        if ( key === "w" ) return palette_button.dispatchEvent( new PointerEvent( "pointerdown", { bubbles: true } ) );
 
     }
 
