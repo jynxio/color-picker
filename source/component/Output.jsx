@@ -18,18 +18,6 @@ import { rgbToString, hexToString, hslToString } from "../color/convertor";
  */
 function Output ( props ) {
 
-    // BUG solid.js can't dispatch event!
-    // BUG solid.js can't dispatch event!
-    // BUG solid.js can't dispatch event!
-
-    // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
-    // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
-    // FIX 原来solid.js为dom所绑定的事件监听器都是模拟的事件监听器!
-
-    // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
-    // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
-    // TODO 是否应该完全禁用JSDOM的event，改为完全使用库的synthetic event呢？
-
     let copy_button;
     let output_button;
     let palette_button;
