@@ -9,15 +9,6 @@
     transform: translateX( -50% );
 }
 
-.footer > address {
-    transition: color 2s cubic-bezier( 0.17, 0.67, 0.36, 1.04 ) 0s;
-}
-
-.footer > address > a {
-    color: inherit;
-    text-decoration: underline solid 1px;
-}
-
 .footer > hr {
     padding: 0;
     margin: 0;
@@ -29,4 +20,38 @@
     margin-inline: 0.5rem;
 
     transition: background-color 2s cubic-bezier(0.17, 0.67, 0.36, 1.04) 0s;
+}
+
+.footer > address {
+    transition: color 2s cubic-bezier( 0.17, 0.67, 0.36, 1.04 ) 0s;
+}
+
+.footer > address > a {
+    position: relative;
+
+    color: inherit;
+    text-decoration: underline solid 1px;
+}
+
+.footer > address > a > span {
+    position: absolute;
+
+    transform: scale( 0 );
+
+    animation-duration: 1.5s;
+    animation-timing-function: cubic-bezier(0.87, 0, 0.13, 1);
+    animation-direction: normal;
+    animation-iteration-count: 1;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale( 0 );
+    }
+    50% {
+        transform: scale( 1.1 );
+    }
+    100% {
+        transform: scale( 0 );
+    }
 }
