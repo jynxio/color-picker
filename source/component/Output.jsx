@@ -139,7 +139,7 @@ function createAnimatedStyle () {
         .fromTo( 255, 0 )
         .setDuration( 2000 )
         .setEasing( easeOutExpo )
-        .setListener( setStrength );
+        .setUpdateListener( setStrength );
 
     const animateStyle = _ => tween.reset().play();
     const getStyle = _ => {

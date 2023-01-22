@@ -1,19 +1,20 @@
 class Tween {
 
-    #id;             // 动画帧函数的标识
+    #id;              // 动画帧函数的标识
 
-    #is_running;     // 运行状态
+    #is_running;      // 运行状态
 
-    #starting_value; // 起始值
-    #ending_value;   // 终止值
-    #delta_value;    // 差异值
+    #starting_value;  // 起始值
+    #ending_value;    // 终止值
+    #delta_value;     // 差异值
 
-    #elapsed_time;   // 累计时间
-    #starting_time;  // 起算时间
-    #duration_time;  // 持续时间
+    #elapsed_time;    // 累计时间
+    #starting_time;   // 起算时间
+    #duration_time;   // 持续时间
 
-    #easing;         // 缓动函数
-    #listener;       // 监听器
+    #easing;          // 缓动函数
+    #end_listener;    // 结束事件的监听器
+    #update_listener; // 更新事件的监听器
 
     constructor () {
 
@@ -39,6 +40,7 @@ class Tween {
             if ( self.#elapsed_time >= self.#duration_time ) {
 
                 self.reset();
+                self.#end_listener?.();
 
                 return;
 
@@ -55,7 +57,7 @@ class Tween {
 
             const current_value = self.#starting_value + self.#delta_value * y;
 
-            self.#listener?.( current_value );
+            self.#update_listener?.( current_value );
 
         } );
 
@@ -123,11 +125,24 @@ class Tween {
      * 设置更新事件的监听器。
      * @param { Function } handler - 监听器。
      */
-    setListener ( listener ) {
+    setUpdateListener ( listener ) {
 
-        this.#listener = listener;
+        this.#update_listener = listener;
 
         return this;
+
+    }
+
+    /**
+     * 设置结束事件的监听器。
+     * @param { Function } handler - 监听器。
+     */
+    setEndListener ( listener ) {
+
+        this.#end_listener = listener
+
+        return this;
+
 
     }
 
