@@ -6,13 +6,13 @@ export default defineConfig( ( {
     command,
     mode,
 } ) => {
+    console.log( mode );
+    switch ( mode ) {
 
-    switch ( command ) {
-
-        case "serve":
+        case "development":
             return createDevelopmentEnvironment();
 
-        case "build":
+        case "production":
             return createProductionEnvironment();
 
         default:
