@@ -5,9 +5,9 @@ import { createStorage } from "../storage/createStorage";
 
 /* -------------------------------------------------------------------------------------------- */
 const [ getGlobalColor, setGlobalColor ] = createStorage( "color", {
-    hex: [ 4, 10, 103, 255 ],
-    rgb: hexToRgb( [ 4, 10, 103, 255 ] ),
-    hsl: hexToHsl( [ 4, 10, 103, 255 ] ),
+    hex: [ 0, 0, 0, 255 ],
+    rgb: hexToRgb( [ 0, 0, 0, 255 ] ),
+    hsl: hexToHsl( [ 0, 0, 0, 255 ] ),
 } );
 
 const getGlobalHex = _ => [ ... getGlobalColor().hex ];
