@@ -3,14 +3,14 @@
  */
 
 /**
- * easeOutCirc。
+ * easeOutExpo。
  * @param { number } x - 值域为[0, 1]的浮点数，代表自变量。
  * @returns { number } - 因变量。
  */
-function easeOutCirc ( x ) {
+function easeOutExpo ( x ) {
 
-    return Math.sqrt( 1 - Math.pow( x - 1, 2 ) );
+    return x === 1 ? 1 : 1 - Math.pow( 2, - 10 * x );
 
 }
 
-export { easeOutCirc };
+export { easeOutExpo };

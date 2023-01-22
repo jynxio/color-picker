@@ -5,6 +5,8 @@ import style from "./output.module.css";
 import { createMemo, onCleanup, onMount } from "solid-js";
 import { getGlobalRgb, getGlobalHex, getGlobalHsl } from "../color/color";
 import { rgbToString, hexToString, hslToString } from "../color/convertor";
+import { easeOutExpo } from "../math/easing";
+import { Tween } from "../math/tween";
 
 /* -------------------------------------------------------------------------------------------- */
 /**
@@ -17,6 +19,8 @@ import { rgbToString, hexToString, hslToString } from "../color/convertor";
  * @returns { JSX } - Output组件。
  */
 function Output ( props ) {
+
+    const copy_tween = createTween(  ) // BUG
 
     let copy_button;
     let output_button;
@@ -47,6 +51,24 @@ function Output ( props ) {
         </div>
     );
 
+    function createTween ( dom ) {
+
+        return new Tween()
+            .fromTo( 0, 255 )
+            .setDuration( 2000 )
+            .setEasing( easeOutExpo )
+            .setListener( strength => {
+
+                const font_color = strength;
+                const background_color = 255 - strength;
+
+                dom.style.setProperty( "color", `rgb( ${ font_color } ${ font_color } ${ font_color } / 1 )` );
+                dom.style.setProperty( "background-color", `rgb( ${ background_color } ${ background_color } ${ background_color } / 1 )` )
+
+            } );
+
+    }
+
     function createColorString () {
 
         const format = props.outputFormat; // "rgb" or "hex" or "hsl"
@@ -63,6 +85,8 @@ function Output ( props ) {
     }
 
     function handleCopyEvent () {
+
+        animate( tween );
 
         const format = props.outputFormat; // "rgb" or "hex" or "hsl"
         const text =
