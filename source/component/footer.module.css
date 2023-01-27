@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
 
+    inline-size: 100%;
+    max-inline-size: 30rem;
+
     transform: translateX( -50% );
 }
 
