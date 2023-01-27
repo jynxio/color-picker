@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------------------------- */
 import style from "./palette.module.css";
 
-import { createMemo, Switch, Match } from "solid-js";
+import { createMemo, onMount, onCleanup, Switch, Match } from "solid-js";
 import { Ribbon } from "./component/Ribbon";
 import { Wheel } from "./component/Wheel";
 import { Cartesian } from "./component/Cartesian";
@@ -26,12 +26,31 @@ function Palette ( props ) {
 
     } );
 
+    onMount( _ => {
+
+        /* 如果执行了下述代码，那么当用户在操纵锚的时候，浏览器就不会进行前进、后退、刷新 */
+        globalThis.addEventListener( "touchmove", handleTouchMoveEvent, { passive: false } );
+
+    } );
+
+    onCleanup( _ => {
+
+        globalThis.removeEventListener( "touchmove", handleTouchMoveEvent );
+
+    } );
+
     return (
         <Switch>
             <Match when={ props.format === "rgb" }><Rgb style={ { "border-color": getBorderColor() } }/></Match>
             <Match when={ props.format === "hsl" }><Hsl style={ { "border-color": getBorderColor() } }/></Match>
         </Switch>
     );
+
+    function handleTouchMoveEvent ( event ) {
+
+        event.preventDefault();
+
+    }
 
 }
 
