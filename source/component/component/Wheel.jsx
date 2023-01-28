@@ -70,8 +70,8 @@ function Wheel ( props ) {
         const degree = getMemoValue();
         const radian = degree / 180 * Math.PI;
 
-        const top = `calc( 50% - ${ Math.cos( radian ) } * calc( 50% - ${ ring_width } ) )`;
-        const left = `calc( ${ Math.sin( radian ) } * calc( 50% - ${ ring_width } ) + 50% )`;
+        const top =  `calc( -1 * ${ Math.cos( radian ) } * ( 50% - ${ ring_width } ) + 50% )`;
+        const left = `calc( ${ Math.sin( radian ) } * ( 50% - ${ ring_width } ) + 50% )`;
         const transform = `translate( -50%, -50% ) rotate( ${ degree }deg )`;
 
         const cursor = getEnabled() ? "all-scroll" : "grab";
